@@ -178,11 +178,11 @@ function LuminousCore() {
           <meshStandardMaterial
             color="#4d7cfe"
             emissive="#2d4cdb"
-            emissiveIntensity={0.5}
-            roughness={0.15}
-            metalness={0.4}
+            emissiveIntensity={0.45}
+            roughness={0.12}
+            metalness={0.65}
             transparent
-            opacity={0.82}
+            opacity={0.85}
           />
         </mesh>
 
@@ -224,7 +224,11 @@ function LuminousCore() {
 }
 
 // Ambient Cosmic Stardust Particles
-function StarDust({ count = 220 }: { count?: number }) {
+function StarDust({
+  count = typeof window !== 'undefined' && window.innerWidth < 768 ? 130 : 220,
+}: {
+  count?: number;
+}) {
   const ref = useRef<THREE.Points>(null);
 
   const positions = useMemo(() => {

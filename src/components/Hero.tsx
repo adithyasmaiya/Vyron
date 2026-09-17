@@ -61,7 +61,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-5 pb-12 pt-24 text-center sm:px-8"
       >
-        <h1 className="font-display text-[clamp(2.9rem,11vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em]">
+        <h1 className="font-display text-[clamp(2.5rem,10.5vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em]">
           <HeadlineLine delay={0.2}>DIGITAL</HeadlineLine>
           <HeadlineLine delay={0.32}>
             <span className="text-stroke">GROWTH,</span>
