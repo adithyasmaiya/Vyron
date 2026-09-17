@@ -26,6 +26,7 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
           style={{ y: imgY }}
           className="absolute inset-0 h-[120%] w-full scale-105 object-cover transition-transform duration-700 group-hover:scale-[1.08]"
           loading={index === 0 ? 'eager' : 'lazy'}
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-void via-void/35 to-void/10" />
         <div className="absolute inset-0 bg-gradient-to-r from-void/60 via-transparent to-transparent" />

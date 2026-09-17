@@ -73,6 +73,8 @@ export default function About() {
                   alt="VYRON monolith — dark glass slab with violet edge light"
                   style={{ scale: imgScale, y: imgY }}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-void/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-7 sm:p-8">

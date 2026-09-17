@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
 import * as THREE from 'three';
@@ -12,6 +12,9 @@ function DigitalWaveField() {
   const cols = 44;
   const rows = 28;
   const count = cols * rows;
+
+  const waveX = useRef(new Float32Array(cols));
+  const waveY = useRef(new Float32Array(rows));
 
   const { positions, initialPositions, colors } = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -77,25 +80,43 @@ function DigitalWaveField() {
     const px = pointer.current.x;
     const py = pointer.current.y;
 
-    for (let i = 0; i < count; i++) {
-      const x = initialPositions[i * 3];
-      const y = initialPositions[i * 3 + 1];
+    const wx = waveX.current;
+    const wy = waveY.current;
 
-      const dx = x - px;
-      const dy = y - py;
-      const distSq = dx * dx + dy * dy;
+    for (let ix = 0; ix < cols; ix++) {
+      const u = ix / (cols - 1);
+      const x = (u - 0.5) * 26;
+      wx[ix] = Math.sin(x * 0.35 + time * 1.1);
+    }
+    for (let iy = 0; iy < rows; iy++) {
+      const v = iy / (rows - 1);
+      const y = (v - 0.5) * 16;
+      wy[iy] = Math.cos(y * 0.28 + time * 0.8);
+    }
 
-      const wave1 = Math.sin(x * 0.35 + time * 1.1) * Math.cos(y * 0.28 + time * 0.8) * 0.75;
-      const wave2 = Math.sin((x + y) * 0.22 + time * 1.3) * 0.45;
+    let i = 0;
+    for (let iy = 0; iy < rows; iy++) {
+      const cy = wy[iy];
+      for (let ix = 0; ix < cols; ix++, i++) {
+        const x = initialPositions[i * 3];
+        const y = initialPositions[i * 3 + 1];
 
-      let ripple = 0;
-      // Skip expensive math when far from cursor
-      if (distSq < 64) {
-        const dist = Math.sqrt(distSq);
-        ripple = Math.sin(dist * 0.6 - time * 2.8) * Math.exp(-dist * 0.16) * 0.5;
+        const dx = x - px;
+        const dy = y - py;
+        const distSq = dx * dx + dy * dy;
+
+        const wave1 = wx[ix] * cy * 0.75;
+        const wave2 = Math.sin((x + y) * 0.22 + time * 1.3) * 0.45;
+
+        let ripple = 0;
+        // Skip expensive math when far from cursor
+        if (distSq < 64) {
+          const dist = Math.sqrt(distSq);
+          ripple = Math.sin(dist * 0.6 - time * 2.8) * Math.exp(-dist * 0.16) * 0.5;
+        }
+
+        arr[i * 3 + 2] = wave1 + wave2 + ripple;
       }
-
-      arr[i * 3 + 2] = wave1 + wave2 + ripple;
     }
 
     posAttr.needsUpdate = true;
@@ -276,9 +297,28 @@ function StarDust({
 }
 
 export default function HeroScene() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { rootMargin: '120px 0px', threshold: 0 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div ref={containerRef} className="pointer-events-none absolute inset-0">
       <Canvas
+        frameloop={inView ? 'always' : 'never'}
         camera={{ position: [0, 0, 7.8], fov: 42 }}
         dpr={[1, 1.5]}
         gl={{
