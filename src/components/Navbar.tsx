@@ -41,10 +41,10 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
       >
         <div className="mx-auto max-w-7xl px-3 sm:px-6">
           <nav
-            className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all duration-500 sm:px-5 ${
+            className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-2xl transition-all duration-500 sm:px-5 ${
               scrolled
-                ? 'border-white/10 bg-black/55 shadow-[0_12px_50px_-12px_rgba(77,124,254,0.25)]'
-                : 'border-white/[0.07] bg-black/25'
+                ? 'border-white/12 bg-black/65 shadow-[0_12px_50px_-12px_rgba(77,124,254,0.25)]'
+                : 'border-white/[0.08] bg-black/35'
             }`}
           >
             <button
