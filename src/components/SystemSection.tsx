@@ -31,7 +31,13 @@ export default function SystemSection() {
 
   return (
     <section id="system" className="relative scroll-mt-20 overflow-hidden py-28 sm:py-36">
-      <div className="pointer-events-none absolute right-[-10%] top-[10%] h-[50vmin] w-[50vmin] rounded-full bg-iris/[0.08] blur-[130px]" />
+      {/* Ambient background atmosphere */}
+      <div className="pointer-events-none absolute right-[-10%] top-[10%] h-[50vmin] w-[50vmin] rounded-full bg-iris/[0.07] blur-[130px]" />
+      <div
+        className="pointer-events-none absolute left-[-8%] bottom-[15%] h-[42vmin] w-[42vmin] rounded-full blur-[140px] transition-colors duration-1000"
+        style={{ backgroundColor: current ? `${current.color}12` : 'transparent' }}
+      />
+
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -52,7 +58,8 @@ export default function SystemSection() {
           </p>
         </motion.div>
 
-        <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+        <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+          {/* Interactive Operating Diagram */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -62,45 +69,123 @@ export default function SystemSection() {
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
-            <div className="animate-spin-slower absolute inset-[4%] rounded-full border border-dashed border-white/[0.13]" />
-            <div className="animate-spin-rev absolute inset-[19%] rounded-full border border-white/[0.07]" />
-            <div className="absolute inset-[33%] rounded-full border border-white/[0.09]" />
+            {/* Orbital Rings with Refined Hierarchical Depth */}
+            <div className="animate-spin-slower pointer-events-none absolute inset-[3%] rounded-full border border-dashed border-white/[0.09]" />
+            <div className="animate-spin-rev pointer-events-none absolute inset-[18%] rounded-full border border-white/[0.07]" />
+            <div className="pointer-events-none absolute inset-[32%] rounded-full border border-white/[0.11]" />
 
+            {/* SVG Connection Lines with Pulse Dynamics */}
             <svg
-              className="absolute inset-0 h-full w-full"
+              className="absolute inset-0 h-full w-full pointer-events-none"
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
             >
+              <defs>
+                <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="0.8" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+
               {disciplines.map((d, i) => {
                 const p = nodePosition(i, disciplines.length);
                 const isActive = i === active;
                 return (
-                  <line
-                    key={d.id}
-                    x1="50"
-                    y1="50"
-                    x2={p.x}
-                    y2={p.y}
-                    stroke={isActive ? d.color : 'rgba(255,255,255,0.10)'}
-                    strokeWidth={isActive ? 1.4 : 1}
-                    vectorEffect="non-scaling-stroke"
-                    strokeDasharray={isActive ? 'none' : '3 4'}
-                    style={{ transition: 'stroke 0.4s ease', opacity: isActive ? 0.9 : 0.7 }}
-                  />
+                  <g key={d.id}>
+                    {/* Background inactive connection track */}
+                    <line
+                      x1="50"
+                      y1="50"
+                      x2={p.x}
+                      y2={p.y}
+                      stroke="rgba(255,255,255,0.08)"
+                      strokeWidth={0.75}
+                      vectorEffect="non-scaling-stroke"
+                      strokeDasharray="2 3"
+                    />
+
+                    {/* Active highlighted connection line */}
+                    {isActive && (
+                      <>
+                        <line
+                          x1="50"
+                          y1="50"
+                          x2={p.x}
+                          y2={p.y}
+                          stroke={d.color}
+                          strokeWidth={1.6}
+                          vectorEffect="non-scaling-stroke"
+                          filter="url(#glow-line)"
+                          style={{
+                            transition: 'stroke 0.4s ease',
+                            opacity: 0.85,
+                          }}
+                        />
+
+                        {/* High-performance traveling energy packet (Core → Node) */}
+                        <motion.circle
+                          r="1.4"
+                          fill="#ffffff"
+                          animate={{
+                            cx: [50, p.x],
+                            cy: [50, p.y],
+                            opacity: [0, 0.9, 0.9, 0],
+                          }}
+                          transition={{
+                            duration: 1.8,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                      </>
+                    )}
+                  </g>
                 );
               })}
             </svg>
 
+            {/* VYRON CORE — Center Glass Engine */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div className="animate-ping-soft absolute inset-0 rounded-full border border-electric/50" />
-              <div className="glass relative flex h-24 w-24 flex-col items-center justify-center rounded-full shadow-[0_0_70px_-12px_rgba(77,124,254,0.55)] md:h-32 md:w-32">
-                <span className="font-display text-sm font-bold tracking-[0.18em] md:text-base">
+              {/* Restrained aura pulse attuned to active discipline color */}
+              <div
+                className="pointer-events-none absolute -inset-5 rounded-full blur-xl transition-all duration-700"
+                style={{
+                  backgroundColor: current ? `${current.color}24` : 'transparent',
+                }}
+              />
+              <div
+                className="pointer-events-none absolute -inset-2 animate-pulse rounded-full border opacity-50 transition-colors duration-700"
+                style={{
+                  borderColor: current ? `${current.color}40` : 'rgba(255,255,255,0.15)',
+                }}
+              />
+
+              {/* Core Cylinder */}
+              <div
+                className="relative flex h-24 w-24 flex-col items-center justify-center rounded-full border border-white/20 bg-void/85 backdrop-blur-2xl transition-all duration-700 md:h-32 md:w-32"
+                style={{
+                  boxShadow: current
+                    ? `0 0 55px -12px ${current.color}50, inset 0 1px 1px 0 rgba(255,255,255,0.25)`
+                    : '0 0 50px -12px rgba(77,124,254,0.4)',
+                }}
+              >
+                {/* Inner specular bevel */}
+                <div className="pointer-events-none absolute inset-[3px] rounded-full border border-white/[0.08]" />
+
+                <span className="font-display text-sm font-bold tracking-[0.2em] text-white md:text-base">
                   VYRON
                 </span>
-                <span className="mt-1 text-[8px] tracking-[0.4em] text-white/50 md:text-[9px]">CORE</span>
+                <span className="mt-1 flex items-center gap-1.5 text-[8px] tracking-[0.4em] text-white/50 md:text-[9px]">
+                  <span
+                    className="h-1 w-1 rounded-full animate-ping"
+                    style={{ backgroundColor: current ? current.color : '#4d7cfe' }}
+                  />
+                  CORE
+                </span>
               </div>
             </div>
 
+            {/* Six Discipline Nodes */}
             {disciplines.map((d, i) => {
               const p = nodePosition(i, disciplines.length);
               const isActive = i === active;
@@ -110,32 +195,47 @@ export default function SystemSection() {
                   key={d.id}
                   onClick={() => setActive(i)}
                   onMouseEnter={() => setActive(i)}
-                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 focus:outline-none"
                   style={{ left: `${p.x}%`, top: `${p.y}%` }}
                   aria-label={`Select ${d.name}`}
                 >
+                  {/* Outer active beacon ring */}
+                  {isActive && (
+                    <span
+                      className="absolute -inset-1.5 rounded-full border animate-ping-soft opacity-60 pointer-events-none"
+                      style={{ borderColor: d.color }}
+                    />
+                  )}
+
+                  {/* Node Capsule */}
                   <span
-                    className={`relative flex h-12 w-12 items-center justify-center rounded-full border font-display text-[11px] font-semibold backdrop-blur-xl transition-all duration-500 md:h-16 md:w-16 md:text-xs ${
+                    className={`relative flex h-11 w-11 items-center justify-center rounded-full border font-display text-[11px] font-semibold backdrop-blur-xl transition-all duration-500 sm:h-12 sm:w-12 md:h-16 md:w-16 md:text-xs ${
                       isActive
-                        ? 'scale-110 border-transparent text-white'
-                        : 'border-white/15 bg-white/[0.03] text-white/60 hover:border-white/35 hover:text-white'
+                        ? 'scale-110 text-white font-bold'
+                        : 'border-white/12 bg-void/80 text-white/60 hover:scale-105 hover:border-white/35 hover:text-white'
                     }`}
                     style={
                       isActive
                         ? {
-                            background: `linear-gradient(135deg, ${d.color}55, ${d.color}22)`,
+                            background: `linear-gradient(135deg, ${d.color}45, rgba(5,5,7,0.85))`,
                             borderColor: d.color,
-                            boxShadow: `0 0 44px -6px ${d.color}`,
+                            boxShadow: `0 0 34px -4px ${d.color}80, inset 0 0 14px -2px ${d.color}40`,
                           }
                         : undefined
                     }
                   >
                     {d.code}
                   </span>
+
+                  {/* Node Label with Clean Badge Appearance */}
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-medium tracking-[0.3em] transition-colors duration-300 md:text-[10px] ${
-                      labelAbove ? 'bottom-full mb-2.5' : 'top-full mt-2.5'
-                    } ${isActive ? 'text-white' : 'text-white/40'}`}
+                    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[8.5px] font-medium tracking-[0.25em] transition-all duration-300 md:text-[9.5px] ${
+                      labelAbove ? 'bottom-full mb-2 sm:mb-2.5' : 'top-full mt-2 sm:mt-2.5'
+                    } ${
+                      isActive
+                        ? 'border border-white/15 bg-white/[0.08] text-white font-semibold shadow-sm'
+                        : 'text-white/45 group-hover:text-white/75'
+                    }`}
                   >
                     {d.key}
                   </span>
@@ -144,63 +244,96 @@ export default function SystemSection() {
             })}
           </motion.div>
 
+          {/* Interactive Glass Detail Card */}
           <div className="relative min-h-[380px] lg:min-h-[440px]" data-cursor>
             <AnimatePresence mode="wait">
               {current && (
                 <motion.div
                   key={current.id}
-                  initial={{ opacity: 0, y: 26, filter: 'blur(6px)' }}
+                  initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -18, filter: 'blur(6px)' }}
+                  exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
                   transition={{ duration: 0.5, ease: EASE }}
-                  className="glass relative overflow-hidden rounded-3xl p-8 sm:p-10"
+                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-8 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10"
                 >
+                  {/* Top specular accent line */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+
+                  {/* Ambient Glow */}
                   <div
-                    className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full blur-[90px] transition-colors duration-700"
-                    style={{ backgroundColor: `${current.color}30` }}
+                    className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full blur-[95px] transition-colors duration-700"
+                    style={{ backgroundColor: `${current.color}25` }}
                   />
-                  <span className="text-stroke-faint pointer-events-none absolute -top-4 right-4 font-display text-[7rem] font-bold leading-none sm:text-[9rem]">
+
+                  {/* Watermark Code */}
+                  <span className="text-stroke-faint pointer-events-none absolute -top-5 right-4 select-none font-display text-[7rem] font-bold leading-none sm:text-[9rem] opacity-35">
                     {current.code}
                   </span>
-                  <p
-                    className="text-[11px] font-semibold tracking-[0.45em]"
-                    style={{ color: current.color }}
-                  >
-                    {current.key} — {current.name.toUpperCase()}
-                  </p>
+
+                  {/* Discipline Header */}
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full shadow-sm"
+                      style={{
+                        backgroundColor: current.color,
+                        boxShadow: `0 0 10px ${current.color}`,
+                      }}
+                    />
+                    <p
+                      className="text-[11px] font-semibold tracking-[0.45em]"
+                      style={{ color: current.color }}
+                    >
+                      {current.key} — {current.name.toUpperCase()}
+                    </p>
+                  </div>
+
                   <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                     {current.tagline}
                   </h3>
+
                   <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white/60">
                     {current.description}
                   </p>
+
+                  {/* Capabilities Badges */}
                   <div className="mt-7 flex flex-wrap gap-2.5">
                     {current.capabilities.map((c) => (
                       <span
                         key={c}
-                        className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-white/70"
+                        className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-white/75 transition-colors hover:border-white/20 hover:bg-white/[0.08]"
                       >
                         {c}
                       </span>
                     ))}
                   </div>
+
+                  {/* Explore Link */}
                   <button
                     onClick={() => scrollToId('#services')}
-                    className="group mt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.22em] text-white/70 transition-colors hover:text-white"
+                    className="group mt-8 inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.22em] text-white/75 transition-colors hover:text-white"
                   >
                     EXPLORE THE PRACTICE
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </button>
+
+                  {/* System Node Selector Indicators */}
                   <div className="mt-8 flex gap-2">
                     {disciplines.map((d, i) => (
                       <button
                         key={d.id}
                         onClick={() => setActive(i)}
                         aria-label={`Go to ${d.key}`}
-                        className={`h-1 rounded-full transition-all duration-500 ${
+                        className={`h-1.5 rounded-full transition-all duration-500 ${
                           i === active ? 'w-10' : 'w-4 bg-white/15 hover:bg-white/30'
                         }`}
-                        style={i === active ? { backgroundColor: current.color } : undefined}
+                        style={
+                          i === active
+                            ? {
+                                backgroundColor: current.color,
+                                boxShadow: `0 0 10px ${current.color}80`,
+                              }
+                            : undefined
+                        }
                       />
                     ))}
                   </div>
