@@ -10,49 +10,76 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
   const ref = useRef<HTMLElement>(null);
   const [expanded, setExpanded] = useState(false);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
 
   return (
     <article
       ref={ref}
-      className="sticky overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]"
+      className="group sticky overflow-hidden rounded-[2rem] border border-white/[0.12] bg-[#090b10] shadow-[0_30px_90px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.03)] transition-all duration-500 hover:border-white/25 hover:shadow-[0_40px_110px_-24px_rgba(77,124,254,0.2)]"
       style={{ top: `${88 + index * 30}px` }}
       data-cursor
     >
-      <div className="relative h-[80vh] min-h-[560px] w-full">
+      {/* Top Specular Edge Highlight Line */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent transition-opacity duration-500 group-hover:via-electric/60" />
+
+      {/* Atmospheric Watermark Index */}
+      <span className="pointer-events-none absolute right-6 top-3 z-10 select-none font-mono text-[clamp(5.5rem,13vw,10.5rem)] font-black leading-none tracking-tighter text-white/[0.03] transition-colors duration-700 group-hover:text-white/[0.06]">
+        0{index + 1}
+      </span>
+
+      <div
+        className={`relative w-full overflow-hidden transition-all duration-500 ${
+          expanded
+            ? 'min-h-[620px] h-auto pb-10 sm:pb-12'
+            : 'h-[80vh] min-h-[540px] sm:min-h-[560px]'
+        }`}
+      >
         <motion.img
           src={p.image}
           alt={p.title}
           style={{ y: imgY }}
-          className="absolute inset-0 h-[120%] w-full scale-105 object-cover"
+          className="absolute inset-0 h-[120%] w-full scale-105 object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
           loading={index === 0 ? 'eager' : 'lazy'}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/35 to-void/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-void/60 via-transparent to-transparent" />
 
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between p-6 sm:p-9">
+        {/* Multi-tier Gradient Occlusion for Pristine Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/75 via-45% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050608]/85 via-[#050608]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/60 via-transparent to-transparent" />
+
+        {/* Top Header Registry Bar */}
+        <div className="relative z-20 flex items-center justify-between p-6 sm:p-9">
           <div className="flex items-center gap-3">
-            <span className="font-display text-sm font-semibold tracking-[0.2em] text-white/85">{p.code}</span>
-            <span className="h-1 w-1 rounded-full bg-electric" />
-            <span className="text-[11px] tracking-[0.3em] text-white/55">{p.year}</span>
+            <span className="rounded-md border border-white/10 bg-white/[0.05] px-2.5 py-1 font-mono text-xs font-semibold tracking-[0.25em] text-white/90 backdrop-blur-md">
+              {p.code}
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-electric shadow-[0_0_8px_#4d7cfe]" />
+            <span className="font-mono text-[11px] tracking-[0.25em] text-white/50">{p.year}</span>
           </div>
-          <span className="glass rounded-full px-4 py-1.5 text-[10px] font-medium tracking-[0.3em] text-white/75">
+          <span className="rounded-full border border-white/15 bg-black/40 px-4 py-1.5 font-mono text-[10px] font-medium tracking-[0.25em] text-white/75 backdrop-blur-md transition-colors duration-300 group-hover:border-electric/40 group-hover:text-white">
             CONCEPT STUDY
           </span>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-9">
-          <div className="flex flex-wrap gap-2">
+        {/* Bottom Content / Editorial Presentation */}
+        <div className="relative z-20 p-6 sm:p-9">
+          <div className="flex flex-wrap items-center gap-2">
             {p.disciplines.map((d) => (
-              <span key={d} className="rounded-full border border-white/15 bg-black/40 px-3.5 py-1.5 text-[10px] font-medium tracking-[0.25em] text-white/75 backdrop-blur-md">
+              <span
+                key={d}
+                className="rounded-full border border-white/12 bg-black/50 px-3.5 py-1.5 font-mono text-[10px] font-medium tracking-[0.2em] text-white/75 backdrop-blur-md transition-all duration-300 group-hover:border-white/25 group-hover:text-white"
+              >
                 {d.toUpperCase()}
               </span>
             ))}
           </div>
-          <h3 className="mt-4 font-display text-[clamp(2rem,5.5vw,4.2rem)] font-semibold leading-[0.98] tracking-[-0.02em]">
+
+          <h3 className="mt-4 font-display text-[clamp(2.1rem,5vw,4.2rem)] font-semibold leading-[1.0] tracking-[-0.025em] text-white transition-colors duration-300">
             {p.title}
           </h3>
-          <p className="mt-2 max-w-xl text-[14px] text-white/60 sm:text-[15px]">{p.subtitle}</p>
+          <p className="mt-2.5 max-w-xl text-[14px] leading-relaxed text-white/65 sm:text-[15px]">
+            {p.subtitle}
+          </p>
 
           <AnimatePresence initial={false}>
             {expanded && (
@@ -63,14 +90,35 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
                 transition={{ duration: 0.55, ease: EASE }}
                 className="overflow-hidden"
               >
-                <p className="max-w-2xl pt-5 text-[14px] leading-relaxed text-white/70">{p.description}</p>
-                <ul className="mt-4 grid max-w-2xl gap-2.5 sm:grid-cols-3">
-                  {p.highlights.map((h) => (
-                    <li key={h} className="glass rounded-2xl p-4 text-[12.5px] leading-snug text-white/75">
-                      {h}
-                    </li>
-                  ))}
-                </ul>
+                <p className="max-w-2xl pt-5 text-[14px] leading-relaxed text-white/75 sm:text-[15px]">
+                  {p.description}
+                </p>
+                <div className="mt-5 border-t border-white/[0.08] pt-4">
+                  <div className="flex items-center justify-between">
+                    <p className="font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase">
+                      SYSTEM HIGHLIGHTS & ARCHITECTURE
+                    </p>
+                    <span className="font-mono text-[9px] tracking-wider text-white/30">
+                      {p.highlights.length} SPECIFICATIONS
+                    </span>
+                  </div>
+                  <ul className="mt-3 grid max-w-2xl gap-2.5 sm:grid-cols-3">
+                    {p.highlights.map((h, hIdx) => (
+                      <li
+                        key={h}
+                        className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-black/50 p-3.5 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-black/70"
+                      >
+                        <div className="flex items-center gap-1.5 font-mono text-[9px] tracking-wider text-white/40">
+                          <span className="h-1 w-1 rounded-full bg-electric" />
+                          <span>SPEC_0{hIdx + 1}</span>
+                        </div>
+                        <p className="mt-2 text-[12.5px] leading-snug text-white/80">
+                          {h}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -78,15 +126,19 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <button
               onClick={() => setExpanded((v) => !v)}
-              className="group flex items-center gap-2.5 rounded-full bg-white px-6 py-3 text-[12px] font-semibold tracking-[0.16em] text-black transition-all duration-300 hover:bg-electric hover:text-white"
+              className="group/btn flex items-center gap-2.5 rounded-full bg-white px-6 py-3 text-[12px] font-semibold tracking-[0.16em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_24px_rgba(77,124,254,0.45)]"
             >
-              {expanded ? 'CLOSE STUDY' : 'OPEN STUDY'}
-              <span className={`transition-transform duration-300 ${expanded ? 'rotate-45' : ''}`}>
-                {expanded ? <Plus className="h-4 w-4" /> : <ArrowUpRight className="h-4 w-4" />}
+              <span>{expanded ? 'CLOSE STUDY' : 'OPEN STUDY'}</span>
+              <span
+                className={`inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/10 transition-all duration-300 group-hover/btn:bg-white/20 ${
+                  expanded ? 'rotate-45' : ''
+                }`}
+              >
+                {expanded ? <Plus className="h-3.5 w-3.5" /> : <ArrowUpRight className="h-3.5 w-3.5" />}
               </span>
             </button>
             {!expanded && (
-              <p className="hidden max-w-sm text-[12px] leading-relaxed text-white/45 md:block">
+              <p className="hidden max-w-sm font-mono text-[11px] leading-relaxed text-white/40 md:block">
                 Fictional exploration crafted by VYRON — no client affiliation.
               </p>
             )}
@@ -102,6 +154,9 @@ export default function Work() {
 
   return (
     <section id="work" className="relative scroll-mt-20 py-28 sm:py-36">
+      {/* Subtle Atmospheric Lighting behind the Archive */}
+      <div className="pointer-events-none absolute left-1/2 top-40 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-electric/[0.03] blur-[150px]" />
+
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -111,7 +166,19 @@ export default function Work() {
           className="flex flex-wrap items-end justify-between gap-6"
         >
           <div>
-            <p className="text-[11px] font-medium tracking-[0.5em] text-electric">SELECTED WORK</p>
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-2 w-2 items-center justify-center">
+                <span className="absolute h-full w-full animate-ping rounded-full bg-electric/60" />
+                <span className="h-1.5 w-1.5 rounded-full bg-electric" />
+              </span>
+              <p className="font-mono text-[11px] font-semibold tracking-[0.45em] text-electric uppercase">
+                SELECTED WORK
+              </p>
+              <span className="hidden sm:inline-block h-3 w-px bg-white/15" />
+              <span className="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase">
+                PROJECT ARCHIVE
+              </span>
+            </div>
             <h2 className="mt-5 font-display text-[clamp(2.4rem,6vw,4.6rem)] font-semibold leading-[1.0] tracking-[-0.02em]">
               Studies in
               <br />
