@@ -133,10 +133,10 @@ function DigitalWaveField() {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.088}
+        size={0.080}
         vertexColors
         transparent
-        opacity={0.72}
+        opacity={0.76}
         sizeAttenuation
         depthWrite={false}
         blending={THREE.AdditiveBlending}
@@ -150,6 +150,7 @@ function LuminousCore() {
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
+  const innerCoreRef = useRef<THREE.Mesh>(null);
   const ring1Ref = useRef<THREE.Mesh>(null);
   const ring2Ref = useRef<THREE.Mesh>(null);
   const ring3Ref = useRef<THREE.Mesh>(null);
@@ -172,6 +173,11 @@ function LuminousCore() {
 
     if (wireRef.current) {
       wireRef.current.rotation.y = -t * 0.18;
+    }
+
+    if (innerCoreRef.current) {
+      const pulse = 0.33 + Math.sin(t * 1.6) * 0.02;
+      innerCoreRef.current.scale.setScalar(pulse);
     }
 
     if (ring1Ref.current) {
@@ -197,47 +203,50 @@ function LuminousCore() {
         <mesh ref={coreRef} scale={1.15}>
           <octahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
-            color="#4d7cfe"
-            emissive="#2d4cdb"
-            emissiveIntensity={0.45}
-            roughness={0.12}
-            metalness={0.65}
+            color="#3d6ef5"
+            emissive="#1e37a8"
+            emissiveIntensity={0.32}
+            roughness={0.08}
+            metalness={0.52}
             transparent
-            opacity={0.85}
+            opacity={0.88}
+            flatShading
           />
         </mesh>
 
         {/* Wireframe Facets */}
-        <mesh ref={wireRef} scale={1.22}>
+        <mesh ref={wireRef} scale={1.21}>
           <octahedronGeometry args={[1, 0]} />
           <meshBasicMaterial
             wireframe
-            color="#a78bfa"
+            color="#b4c6ff"
             transparent
-            opacity={0.38}
+            opacity={0.28}
+            depthWrite={false}
+            blending={THREE.AdditiveBlending}
           />
         </mesh>
 
         {/* Inner Glowing Core */}
-        <mesh scale={0.35}>
-          <sphereGeometry args={[1, 16, 16]} />
-          <meshBasicMaterial color="#ffffff" transparent opacity={0.9} />
+        <mesh ref={innerCoreRef} scale={0.33}>
+          <sphereGeometry args={[1, 20, 20]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.88} />
         </mesh>
 
         {/* Dynamic Orbital Rings */}
         <mesh ref={ring1Ref}>
-          <torusGeometry args={[2.0, 0.016, 16, 80]} />
-          <meshBasicMaterial color="#4d7cfe" transparent opacity={0.65} />
+          <torusGeometry args={[2.0, 0.014, 16, 100]} />
+          <meshBasicMaterial color="#4d7cfe" transparent opacity={0.65} depthWrite={false} blending={THREE.AdditiveBlending} />
         </mesh>
 
         <mesh ref={ring2Ref}>
-          <torusGeometry args={[2.35, 0.012, 16, 80]} />
-          <meshBasicMaterial color="#8b5cf6" transparent opacity={0.55} />
+          <torusGeometry args={[2.35, 0.011, 16, 100]} />
+          <meshBasicMaterial color="#8b5cf6" transparent opacity={0.52} depthWrite={false} blending={THREE.AdditiveBlending} />
         </mesh>
 
         <mesh ref={ring3Ref}>
-          <torusGeometry args={[2.65, 0.009, 16, 80]} />
-          <meshBasicMaterial color="#38bdf8" transparent opacity={0.45} />
+          <torusGeometry args={[2.68, 0.008, 16, 100]} />
+          <meshBasicMaterial color="#38bdf8" transparent opacity={0.42} depthWrite={false} blending={THREE.AdditiveBlending} />
         </mesh>
       </Float>
     </group>
@@ -284,16 +293,29 @@ function StarDust({
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.035}
-        color="#a5b4fc"
+        size={0.032}
+        color="#c7d2fe"
         transparent
-        opacity={0.6}
+        opacity={0.55}
         sizeAttenuation
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />
     </points>
   );
+}
+
+// Gentle cinematic camera parallax with heavy damping and bounded inertia
+function CameraRig() {
+  useFrame((state) => {
+    if (typeof window !== 'undefined' && window.scrollY > window.innerHeight * 1.05) return;
+    const { pointer, camera } = state;
+    const targetX = pointer.x * 0.20;
+    const targetY = pointer.y * 0.12;
+    camera.position.x += (targetX - camera.position.x) * 0.025;
+    camera.position.y += (targetY - camera.position.y) * 0.025;
+  });
+  return null;
 }
 
 export default function HeroScene() {
@@ -329,11 +351,15 @@ export default function HeroScene() {
           depth: true,
         }}
       >
-        <ambientLight intensity={0.4} />
-        <pointLight position={[0, 3, 5]} intensity={14} color="#4d7cfe" distance={15} />
-        <pointLight position={[-6, -2, 2]} intensity={10} color="#8b5cf6" distance={15} />
-        <pointLight position={[6, -3, 3]} intensity={8} color="#38bdf8" distance={15} />
+        <ambientLight intensity={0.36} />
+        {/* Key light: crisp specular highlights on crystal facets */}
+        <pointLight position={[2.5, 3.5, 4.8]} intensity={12} color="#e8efff" distance={16} />
+        {/* Secondary rim light: subtle violet edge sculpt */}
+        <pointLight position={[-5, 1.2, 2.5]} intensity={9} color="#8b5cf6" distance={15} />
+        {/* Wave bounce: soft cyan accent across wave field */}
+        <pointLight position={[3, -3.2, 3]} intensity={7} color="#38bdf8" distance={15} />
 
+        <CameraRig />
         <DigitalWaveField />
         <LuminousCore />
         <StarDust />
