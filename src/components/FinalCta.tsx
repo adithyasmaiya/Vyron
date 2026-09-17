@@ -92,20 +92,32 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
   return (
     <section id="contact" ref={containerRef} className="relative h-[220vh] scroll-mt-20">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-5 py-8 text-center sm:px-8">
+        {/* Ambient Focal Glow */}
         <motion.div
           style={{ opacity: glowOpacity }}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.12] blur-[140px]"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.10] blur-[140px]"
         />
+
+        {/* Dynamic Conic Light Field */}
         <div
-          className="animate-spin-slow pointer-events-none absolute left-1/2 top-1/2 h-[90vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30"
+          className="animate-spin-slow pointer-events-none absolute left-1/2 top-1/2 h-[90vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-25"
           style={{
             background:
-              'conic-gradient(from 0deg, transparent 0%, rgba(77,124,254,0.10) 20%, transparent 40%, transparent 60%, rgba(139,92,246,0.10) 80%, transparent 100%)',
+              'conic-gradient(from 0deg, transparent 0%, rgba(77,124,254,0.12) 20%, transparent 40%, transparent 60%, rgba(139,92,246,0.12) 80%, transparent 100%)',
             filter: 'blur(40px)',
           }}
         />
+
+        {/* Concentric Telemetry Initiation Rings */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="h-[520px] w-[520px] rounded-full border border-white/[0.03] sm:h-[640px] sm:w-[640px]" />
+          <div className="absolute inset-0 m-auto h-[380px] w-[380px] rounded-full border border-white/[0.04] border-dashed sm:h-[460px] sm:w-[460px]" />
+          <div className="absolute inset-0 m-auto h-[240px] w-[240px] rounded-full border border-white/[0.06] sm:h-[280px] sm:w-[280px]" />
+        </div>
+
+        {/* Blueprint Grid Atmosphere */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-50"
+          className="pointer-events-none absolute inset-0 opacity-40"
           style={{
             backgroundImage:
               'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
@@ -114,19 +126,34 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
             WebkitMaskImage: 'radial-gradient(ellipse 60% 55% at 50% 50%, black 10%, transparent 75%)',
           }}
         />
+
+        {/* Background Monolithic Brand Watermark */}
         <span className="text-stroke-faint pointer-events-none absolute -bottom-[4vw] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[24vw] font-bold leading-none tracking-[-0.03em] opacity-60">
           VYRON
         </span>
 
+        {/* Content Container */}
         <div className="relative z-10 flex flex-col items-center">
-          <motion.p
+          {/* Header Telemetry Badge */}
+          <motion.div
             style={{ opacity: labelOpacity }}
-            className="text-[11px] font-medium tracking-[0.5em] text-electric"
+            className="flex items-center justify-center gap-3"
           >
-            READY WHEN YOU ARE
-          </motion.p>
+            <span className="relative flex h-2 w-2 items-center justify-center">
+              <span className="absolute h-full w-full animate-ping rounded-full bg-electric/60" />
+              <span className="h-1.5 w-1.5 rounded-full bg-electric" />
+            </span>
+            <p className="font-mono text-[11px] font-semibold tracking-[0.45em] text-electric uppercase">
+              READY WHEN YOU ARE
+            </p>
+            <span className="hidden sm:inline-block h-3 w-px bg-white/15" />
+            <span className="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase">
+              SYSTEM INITIATION
+            </span>
+          </motion.div>
 
-          <h2 className="mx-auto mt-5 max-w-5xl font-display text-[clamp(2.6rem,8.8vw,7.8rem)] font-bold leading-[0.96] tracking-[-0.03em]">
+          {/* Monumental Headline */}
+          <h2 className="mx-auto mt-6 max-w-5xl font-display text-[clamp(2.6rem,8.5vw,7.6rem)] font-bold leading-[0.96] tracking-[-0.035em]">
             <span className="block space-x-3 sm:space-x-5">
               <HeadlineWord text="LET'S" progress={scrollYProgress} range={[0.04, 0.22]} />
               <HeadlineWord text="BUILD" progress={scrollYProgress} range={[0.2, 0.38]} />
@@ -136,7 +163,8 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-lg text-[15px] leading-relaxed">
+          {/* Subtitle Word-by-word Reveal */}
+          <p className="mx-auto mt-6 max-w-lg text-[14.5px] leading-relaxed sm:text-[15.5px]">
             {SUBTITLE_WORDS.map((word, idx) => {
               const start = 0.54 + (idx / SUBTITLE_WORDS.length) * 0.22;
               const end = start + 0.04;
@@ -151,27 +179,40 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
             })}
           </p>
 
+          {/* Action Trigger Area */}
           <motion.div
             style={{ opacity: actionOpacity, y: actionY, scale: actionScale }}
             className="mt-10 flex flex-col items-center sm:mt-12"
           >
+            {/* Focal Magnetic Circular CTA */}
             <Magnetic strength={0.22}>
               <button
                 onClick={onStart}
-                className="group relative flex h-36 w-36 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_100px_-10px_rgba(77,124,254,0.9)] sm:h-44 sm:w-44"
+                className="group relative flex h-36 w-36 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_90px_10px_rgba(77,124,254,0.7)] sm:h-44 sm:w-44"
+                aria-label="Start a project with VYRON"
               >
-                <span className="animate-ping-soft absolute inset-0 rounded-full border border-white/60" />
-                <span className="text-[12px] font-bold tracking-[0.2em]">START</span>
-                <span className="text-[12px] font-bold tracking-[0.2em]">A PROJECT</span>
-                <ArrowUpRight className="mt-1 h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                {/* Precision beacon ring */}
+                <span className="animate-ping-soft absolute inset-0 rounded-full border border-white/70" />
+                <span className="pointer-events-none absolute -inset-2 rounded-full border border-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-hover:border-electric/50" />
+
+                {/* Specular highlight rim */}
+                <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-transparent to-black/10 opacity-60 transition-opacity duration-500 group-hover:opacity-0" />
+
+                <span className="relative z-10 font-mono text-[12px] font-bold tracking-[0.22em]">
+                  START
+                </span>
+                <span className="relative z-10 font-mono text-[12px] font-bold tracking-[0.22em]">
+                  A PROJECT
+                </span>
+                <ArrowUpRight className="relative z-10 mt-1 h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
             </Magnetic>
 
-            {/* Positioned comfortably further down so magnetic pull never interferes with selecting links */}
+            {/* Subordinate Direct Transmission Links (Comfortably spaced to avoid magnetic interference) */}
             <div className="relative z-20 mt-16 flex flex-col items-center gap-4 sm:mt-24 sm:flex-row sm:gap-8">
               <a
                 href="mailto:hello@vyron.in"
-                className="text-sm tracking-[0.08em] text-white/60 underline decoration-white/25 underline-offset-8 transition-colors hover:text-white hover:decoration-electric"
+                className="font-mono text-sm tracking-[0.08em] text-white/60 underline decoration-white/20 underline-offset-8 transition-colors duration-300 hover:text-white hover:decoration-electric"
               >
                 hello@vyron.in
               </a>
@@ -180,14 +221,14 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
                 href="https://wa.me/919845012345?text=Hi%20VYRON%2C%20let%27s%20discuss%20a%20project"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm tracking-[0.08em] text-emerald-400/90 underline decoration-emerald-400/30 underline-offset-8 transition-colors hover:text-emerald-300"
+                className="font-mono text-sm tracking-[0.08em] text-emerald-400/90 underline decoration-emerald-400/30 underline-offset-8 transition-colors duration-300 hover:text-emerald-300"
               >
                 WhatsApp: +91 98450 12345 ↗
               </a>
               <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
               <button
                 onClick={() => scrollToId('#work')}
-                className="text-[12px] font-semibold tracking-[0.22em] text-white/60 transition-colors hover:text-white"
+                className="font-mono text-[12px] font-semibold tracking-[0.22em] text-white/60 transition-colors duration-300 hover:text-white"
               >
                 EXPLORE WORK →
               </button>
