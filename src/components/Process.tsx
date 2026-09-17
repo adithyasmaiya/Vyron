@@ -163,7 +163,7 @@ export default function Process() {
                 </span>
                 <span className="h-px w-full bg-gradient-to-r from-white/25 to-white/[0.04]" />
               </div>
-              <div className="glass flex h-full flex-col justify-between rounded-3xl p-7">
+              <div className="glass flex h-full flex-col justify-between rounded-3xl border border-white/10 p-6 sm:p-7">
                 <div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-stroke-faint font-display text-5xl font-bold">{s.code}</span>
