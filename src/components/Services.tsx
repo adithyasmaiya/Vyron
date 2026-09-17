@@ -128,7 +128,7 @@ export default function Services() {
       const track = trackRef.current;
       const wrap = wrapRef.current;
       if (!track || !wrap) return;
-      const getAmount = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const getAmount = () => Math.max(0, track.scrollWidth - window.innerWidth + 32);
       const tween = gsap.to(track, {
         x: () => -getAmount(),
         ease: 'none',
@@ -226,7 +226,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8%' }}
               transition={{ duration: 0.7, delay: Math.min(i * 0.05, 0.25) }}
-              className="glass relative overflow-hidden rounded-3xl p-7"
+              className="glass relative overflow-hidden rounded-3xl border border-white/10 p-6 sm:p-7"
             >
               <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-[80px]" style={{ background: `${s.accent}2e` }} />
               <div className="flex items-center gap-3">
