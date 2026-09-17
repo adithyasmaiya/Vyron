@@ -101,7 +101,12 @@ export default function Why() {
     const scrollTop = window.scrollY + rect.top;
     const totalHeight = rect.height - window.innerHeight;
     const targetScroll = scrollTop + (0.28 + index * 0.14 + 0.04) * totalHeight;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (t: number, opts?: Record<string, unknown>) => void } }).__lenis;
+    if (lenis) {
+      lenis.scrollTo(targetScroll, { duration: 1.2, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+    } else {
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
   };
 
   return (
