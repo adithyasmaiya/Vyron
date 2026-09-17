@@ -35,10 +35,7 @@ export default function App() {
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });
     }
-    window.requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-      window.setTimeout(() => ScrollTrigger.refresh(), 350);
-    });
+    ScrollTrigger.refresh();
   }, []);
   const openModal = useCallback(() => setModalOpen(true), []);
   const closeModal = useCallback(() => setModalOpen(false), []);
@@ -79,13 +76,6 @@ export default function App() {
 
     window.addEventListener('load', resetToTop);
     window.addEventListener('beforeunload', resetToTop);
-
-    if (typeof document !== 'undefined' && 'fonts' in document) {
-      document.fonts.ready.then(() => {
-        ScrollTrigger.refresh();
-      });
-    }
-
     return () => {
       window.removeEventListener('load', resetToTop);
       window.removeEventListener('beforeunload', resetToTop);

@@ -32,10 +32,7 @@ export default function About() {
 
   return (
     <section id="studio" ref={sectionRef} className="relative scroll-mt-20 overflow-hidden py-28 sm:py-36">
-      {/* Ambient background atmosphere */}
-      <div className="pointer-events-none absolute right-[-5%] top-[20%] h-[48vmin] w-[48vmin] rounded-full bg-iris/[0.06] blur-[140px]" />
-      <div className="pointer-events-none absolute left-[-5%] bottom-[15%] h-[40vmin] w-[40vmin] rounded-full bg-electric/[0.035] blur-[120px]" />
-
+      <div className="pointer-events-none absolute right-[-8%] top-[20%] h-[44vmin] w-[44vmin] rounded-full bg-iris/[0.07] blur-[130px]" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -43,10 +40,7 @@ export default function About() {
           viewport={{ once: true, margin: '-12%' }}
           transition={{ duration: 0.9, ease: EASE }}
         >
-          <div className="flex items-center gap-3">
-            <span className="h-px w-6 bg-electric/60" />
-            <p className="text-[11px] font-medium tracking-[0.5em] text-electric">THE STUDIO</p>
-          </div>
+          <p className="text-[11px] font-medium tracking-[0.5em] text-electric">THE STUDIO</p>
           <h2 className="mt-5 max-w-4xl font-display text-[clamp(2.4rem,6vw,4.6rem)] font-semibold leading-[1.0] tracking-[-0.02em]">
             Six disciplines.
             <br />
@@ -55,7 +49,6 @@ export default function About() {
         </motion.div>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-16">
-          {/* Left Column: Digital Monolith */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -71,81 +64,39 @@ export default function About() {
                 ry.set(0);
               }}
               style={{ rotateX: srx, rotateY: sry, transformStyle: 'preserve-3d' }}
-              className="group relative overflow-hidden rounded-[2rem] sm:rounded-[2.25rem] border border-white/12 bg-ink/90 shadow-[0_35px_100px_-25px_rgba(0,0,0,0.95)] transition-all duration-700 hover:border-white/25 hover:shadow-[0_45px_120px_-20px_rgba(109,125,251,0.25)]"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-white/10"
               data-cursor
             >
-              <div className="relative h-[420px] w-full overflow-hidden sm:h-[520px] md:h-[560px]">
+              <div className="relative h-[480px] w-full overflow-hidden sm:h-[560px]">
                 <motion.img
                   src="/images/about-core.jpg"
                   alt="VYRON monolith — dark glass slab with violet edge light"
                   style={{ scale: imgScale, y: imgY }}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700"
                 />
-
-                {/* Multi-tier gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-void via-void/35 to-transparent z-10" />
-                <div className="absolute inset-0 bg-gradient-to-r from-void/40 via-transparent to-transparent z-10" />
-
-                {/* Top specular hairline accent */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent z-20" />
-
-                {/* Outer inset boundary ring */}
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.08] rounded-[2rem] sm:rounded-[2.25rem] z-20" />
-
-                {/* Ambient corner illumination */}
-                <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-iris/15 blur-[80px] opacity-0 transition-opacity duration-700 group-hover:opacity-100 z-10" />
-
-                {/* Top Monolith Metadata */}
-                <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between p-6 sm:p-7">
-                  <div className="flex items-center gap-2.5">
-                    <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-                      <span className="absolute h-full w-full animate-ping rounded-full bg-iris/40 opacity-75" />
-                      <span className="h-1.5 w-1.5 rounded-full bg-iris shadow-[0_0_6px_#8b5cf6]" />
-                    </span>
-                    <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.25em] text-white/80">
-                      STUDIO // ARTIFACT
-                    </span>
-                  </div>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1 font-mono text-[9px] tracking-[0.25em] text-white/50 backdrop-blur-md">
-                    MONOLITH 01
-                  </span>
-                </div>
-
-                {/* Bottom Monolith Information */}
-                <div className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-between p-7 sm:p-8">
+                <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-void/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-7 sm:p-8">
                   <div>
-                    <div className="flex items-center gap-2">
-                      <span className="h-1 w-1 rounded-full bg-iris" />
-                      <p className="font-mono text-[10px] tracking-[0.4em] text-white/55">VYRON CORE</p>
-                    </div>
-                    <p className="mt-2 font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                    <p className="text-[10px] tracking-[0.4em] text-white/50">VYRON CORE</p>
+                    <p className="mt-2 font-display text-xl font-semibold sm:text-2xl">
                       Design × Technology × Growth
                     </p>
                   </div>
-                  <span className="hidden rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 font-mono text-[10px] tracking-[0.3em] text-white/70 backdrop-blur-xl transition-colors group-hover:border-white/25 group-hover:text-white sm:block">
-                    EST. MMXXVI
+                  <span className="glass hidden rounded-full px-4 py-2 text-[10px] tracking-[0.3em] text-white/70 sm:block">
+                    EST. MMXXVI · BENGALURU, INDIA
                   </span>
                 </div>
               </div>
             </motion.div>
-
-            {/* Studio Values Capsules */}
             <div className="mt-5 flex flex-wrap gap-2.5">
               {VALUES.map((v) => (
-                <span
-                  key={v}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] px-4 py-1.5 text-xs font-medium tracking-[0.08em] text-white/70 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
-                >
-                  <span className="h-1 w-1 rounded-full bg-iris/60" />
+                <span key={v} className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs text-white/60">
                   {v}
                 </span>
               ))}
             </div>
           </motion.div>
 
-          {/* Right Column: Editorial Manifesto & Disciplines Index */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -153,39 +104,34 @@ export default function About() {
             transition={{ duration: 1, delay: 0.12, ease: EASE }}
             className="flex flex-col justify-center"
           >
-            <div className="border-l-2 border-electric/40 pl-6">
-              <p className="text-[15px] leading-relaxed text-white/70 sm:text-base font-normal">
-                VYRON is a multidisciplinary growth studio operating where a creative studio,
-                an engineering team and a performance agency converge. No silos, no handoffs
-                lost in translation — one team fluent in technology, design, content,
-                media, automation and data.
-              </p>
-              <p className="mt-4 text-[15px] leading-relaxed text-white/70 sm:text-base font-normal">
-                We partner with a small number of ambitious brands at a time, embedding
-                deeply and building systems designed to outlast the engagement.
-              </p>
-            </div>
+            <p className="text-[15px] leading-relaxed text-white/60 sm:text-base">
+              Engineered in Bengaluru and Mumbai, VYRON is a multidisciplinary growth studio
+              operating where high-end design, deep engineering and compounding growth converge.
+              No silos, no handoffs lost in translation — one team fluent in technology,
+              design, content, performance marketing, automation and intelligence.
+            </p>
+            <p className="mt-4 text-[15px] leading-relaxed text-white/60 sm:text-base">
+              We partner with an intentional cohort of category-defining Indian brands and
+              fast-scaling global ventures, embedding deeply to build systems designed to outlast
+              the engagement.
+            </p>
 
-            <div className="mt-9 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+            <div className="mt-9">
               {disciplines.map((d) => (
                 <button
                   key={d.id}
                   onClick={() => scrollToId('#system')}
-                  className="group flex w-full items-center justify-between py-4 text-left transition-all duration-300 hover:pl-2"
+                  className="group flex w-full items-center justify-between border-t border-white/[0.09] py-4 text-left last:border-b"
                 >
                   <span className="flex items-baseline gap-4">
-                    <span className="font-mono text-xs font-semibold tracking-wider" style={{ color: d.color }}>
-                      {d.code}
-                    </span>
-                    <span className="font-display text-lg font-medium tracking-tight text-white/80 transition-colors duration-300 group-hover:text-white sm:text-xl">
+                    <span className="font-display text-xs" style={{ color: d.color }}>{d.code}</span>
+                    <span className="font-display text-lg font-medium tracking-tight text-white/75 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white sm:text-xl">
                       {d.name}
                     </span>
                   </span>
                   <span className="flex items-center gap-3">
-                    <span className="hidden text-[12px] tracking-wide text-white/45 sm:block">{d.tagline}</span>
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/40 transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/[0.08] group-hover:text-white">
-                      <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </div>
+                    <span className="hidden text-[12px] text-white/40 sm:block">{d.tagline}</span>
+                    <ArrowUpRight className="h-4 w-4 text-white/25 transition-all duration-300 group-hover:text-white" />
                   </span>
                 </button>
               ))}

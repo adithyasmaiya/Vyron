@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# VYRON® — Digital Growth Studio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A multidisciplinary digital growth studio website — technology, design, content, performance marketing, automation and intelligence in one connected system. Engineered in Bengaluru and Mumbai for category-defining Indian brands and fast-scaling global ventures.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## React Compiler
+- **Frontend**: React 19, TypeScript, Vite 7
+- **Styling**: Tailwind CSS v4
+- **Motion & Interaction**: Framer Motion, GSAP (ScrollTrigger), Lenis smooth scroll
+- **3D Graphics**: Three.js, React Three Fiber, React Three Drei
+- **Backend / API**: Vercel Serverless Functions (`/api/*`), Supabase (PostgreSQL)
+- **Icons**: Lucide React
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Clone & Install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <your-repo-url>
+cd Digimarket
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Copy the `.env.example` to `.env`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cp .env.example .env
 ```
+
+Ensure your Supabase project credentials are configured:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+### 3. Run Development Server
+
+```bash
+npm run dev
+```
+
+Visit [http://localhost:5173](http://localhost:5173) in your browser.
+
+---
+
+## 🧪 Quality & Validation
+
+Verify type safety and linting:
+
+```bash
+# TypeScript Typecheck
+npx tsc --noEmit
+
+# ESLint Check
+npm run lint
+
+# Production Build
+npm run build
+```
+
+---
+
+## 🌐 Deploying to Vercel
+
+This repository is pre-configured and 100% ready for zero-config deployment on Vercel:
+
+1. Push your repository to **GitHub**.
+2. Go to **[vercel.com](https://vercel.com)** and click **"Add New Project"**.
+3. Import your GitHub repository.
+4. Framework Preset will be automatically detected as **Vite**.
+5. Add the Environment Variables (from your `.env`) in the Vercel Project Settings:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+6. Click **Deploy**.
+
+> **Note**: The `/api/*` directory contains native Node.js Serverless Functions for inquiries and catalog data. Vercel automatically deploys these alongside the static client bundle defined in `vercel.json`.

@@ -58,10 +58,11 @@ function apiDevMiddleware(env: Record<string, string>): Plugin {
                   status: 'new',
                 }),
               });
-              const data = (await sbRes.json().catch(() => ({}))) as Record<string, unknown>;
+              const data = (await sbRes.json().catch(() => ({}))) as Record<string, unknown> | Array<Record<string, unknown>>;
+              const recordId = Array.isArray(data) ? (data[0] as { id?: number })?.id : (data as { id?: number })?.id;
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = sbRes.ok ? 201 : 400;
-              res.end(JSON.stringify(sbRes.ok ? { ok: true, id: (Array.isArray(data) ? (data[0] as { id?: number })?.id : (data as { id?: number })?.id) || 1 } : data));
+              res.end(JSON.stringify(sbRes.ok ? { ok: true, id: recordId || 1 } : data));
             } catch {
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = 201;
@@ -105,11 +106,11 @@ export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), ['VITE_', 'NEXT_PUBLIC_']);
   const plugins = [react(), tailwindcss(), apiDevMiddleware(env)];
   try {
-    // @ts-expect-error optional source tags
+    // @ts-expect-error optional local helper
     const m = await import('./.vite-source-tags.js');
     plugins.push(m.sourceTags());
   } catch {
-    // optional source tags file not present
+    // ignore if not present
   }
 
   const processEnvDefines: Record<string, string> = {};
@@ -121,20 +122,5 @@ export default defineConfig(async ({ mode }) => {
     plugins,
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: processEnvDefines,
-    build: {
-      chunkSizeWarningLimit: 800,
-      rollupOptions: {
-        output: {
-          manualChunks(id: string) {
-            if (id.includes('node_modules/three')) {
-              return 'vendor-three';
-            }
-            if (id.includes('node_modules/@react-three')) {
-              return 'vendor-r3f';
-            }
-          },
-        },
-      },
-    },
   };
 });

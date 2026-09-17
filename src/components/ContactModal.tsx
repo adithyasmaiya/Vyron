@@ -1,10 +1,10 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Check, Loader2, X } from 'lucide-react';
 import { startScroll, stopScroll } from '../lib/scroll';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const BUDGETS = ['Under $10k', '$10k – $25k', '$25k – $50k', '$50k+'];
+const BUDGETS = ['Under ₹5 Lakhs', '₹5L – ₹15 Lakhs', '₹15L – ₹35 Lakhs', '₹35 Lakhs+'];
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -17,27 +17,24 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
+  const close = useCallback(() => {
+    setStatus('idle');
+    setErrorMsg('');
+    onClose();
+  }, [onClose]);
+
   useEffect(() => {
     if (!open) return;
     stopScroll();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') close();
     };
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
       startScroll();
     };
-  }, [open, onClose]);
-
-  const [prevOpen, setPrevOpen] = useState(open);
-  if (open !== prevOpen) {
-    setPrevOpen(open);
-    if (open) {
-      setStatus('idle');
-      setErrorMsg('');
-    }
-  }
+  }, [open, close]);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -68,7 +65,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto bg-void/80 p-4 backdrop-blur-xl"
-          onClick={onClose}
+          onClick={close}
         >
           <motion.div
             initial={{ opacity: 0, y: 44, scale: 0.97 }}
@@ -80,7 +77,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
           >
             <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-electric/15 blur-[100px]" />
             <button
-              onClick={onClose}
+              onClick={close}
               aria-label="Close"
               className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/12 text-white/60 transition-colors hover:border-white/30 hover:text-white"
             >
@@ -99,10 +96,10 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                 </motion.span>
                 <h3 className="mt-6 font-display text-3xl font-semibold tracking-tight">Signal received.</h3>
                 <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/55">
-                  Your brief is in the system. A strategist will respond within one business day.
+                  Your brief is in the system. Our team in Bengaluru will respond within one business day.
                 </p>
                 <button
-                  onClick={onClose}
+                  onClick={close}
                   className="mt-8 rounded-full bg-white px-8 py-3.5 text-[12px] font-semibold tracking-[0.16em] text-black transition-colors hover:bg-electric hover:text-white"
                 >
                   BACK TO THE SITE
@@ -110,7 +107,12 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
               </div>
             ) : (
               <>
-                <p className="text-[10px] font-medium tracking-[0.45em] text-electric">START A PROJECT</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-[10px] font-medium tracking-[0.45em] text-electric">START A PROJECT</p>
+                  <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[9px] tracking-[0.2em] text-white/50">
+                    BENGALURU · MUMBAI
+                  </span>
+                </div>
                 <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                   Tell us where you&apos;re headed.
                 </h3>
@@ -118,20 +120,20 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="vy-name" className="mb-2 block text-[11px] tracking-[0.25em] text-white/45">NAME *</label>
-                      <input id="vy-name" className="field" placeholder="Ada Lovelace" value={name} onChange={(e) => setName(e.target.value)} required minLength={2} />
+                      <input id="vy-name" className="field" placeholder="Aarav Sharma" value={name} onChange={(e) => setName(e.target.value)} required minLength={2} />
                     </div>
                     <div>
                       <label htmlFor="vy-email" className="mb-2 block text-[11px] tracking-[0.25em] text-white/45">EMAIL *</label>
-                      <input id="vy-email" type="email" className="field" placeholder="ada@company.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                      <input id="vy-email" type="email" className="field" placeholder="aarav@brand.in" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </div>
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="vy-company" className="mb-2 block text-[11px] tracking-[0.25em] text-white/45">COMPANY</label>
-                      <input id="vy-company" className="field" placeholder="Company Inc." value={company} onChange={(e) => setCompany(e.target.value)} />
+                      <input id="vy-company" className="field" placeholder="Acme Brands Pvt Ltd" value={company} onChange={(e) => setCompany(e.target.value)} />
                     </div>
                     <div>
-                      <label htmlFor="vy-budget" className="mb-2 block text-[11px] tracking-[0.25em] text-white/45">BUDGET</label>
+                      <label htmlFor="vy-budget" className="mb-2 block text-[11px] tracking-[0.25em] text-white/45">PROJECT BUDGET (INR)</label>
                       <select id="vy-budget" className="field" value={budget} onChange={(e) => setBudget(e.target.value)}>
                         {BUDGETS.map((b) => (
                           <option key={b} value={b}>{b}</option>
@@ -158,12 +160,21 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                         <Loader2 className="h-4 w-4 animate-spin" /> TRANSMITTING…
                       </>
                     ) : (
-                      'SEND THE BRIEF'
+                      'TRANSMIT BRIEF'
                     )}
                   </button>
-                  <p className="text-center text-[11px] text-white/35">
-                    No spam. No noise. One response within a business day.
-                  </p>
+                  <div className="flex flex-col items-center justify-between gap-2 pt-2 sm:flex-row text-[11px] text-white/40">
+                    <span>Direct: +91 (080) 4920 3100</span>
+                    <a
+                      href="https://wa.me/919845012345?text=Hello%20VYRON%2C%20we%20would%20like%20to%20discuss%20a%20digital%20growth%20engagement."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-400 hover:underline flex items-center gap-1"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      Chat on WhatsApp ↗
+                    </a>
+                  </div>
                 </form>
               </>
             )}

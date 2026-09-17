@@ -58,14 +58,13 @@ export default function SystemSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-12%' }}
             transition={{ duration: 1.1, ease: EASE }}
-            className="relative mx-auto aspect-square w-full max-w-[540px]"
+            className="relative mx-auto aspect-square w-full max-w-[560px]"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
-            {/* Orbital Rings with calibrated depth hierarchy */}
-            <div className="animate-spin-slower absolute inset-[4%] rounded-full border border-dashed border-white/[0.10]" />
-            <div className="animate-spin-rev absolute inset-[19%] rounded-full border border-white/[0.06]" />
-            <div className="absolute inset-[33%] rounded-full border border-white/[0.08]" />
+            <div className="animate-spin-slower absolute inset-[4%] rounded-full border border-dashed border-white/[0.13]" />
+            <div className="animate-spin-rev absolute inset-[19%] rounded-full border border-white/[0.07]" />
+            <div className="absolute inset-[33%] rounded-full border border-white/[0.09]" />
 
             <svg
               className="absolute inset-0 h-full w-full"
@@ -76,91 +75,32 @@ export default function SystemSection() {
                 const p = nodePosition(i, disciplines.length);
                 const isActive = i === active;
                 return (
-                  <g key={d.id}>
-                    {isActive && (
-                      <>
-                        {/* Soft radiant glow corridor */}
-                        <line
-                          x1="50"
-                          y1="50"
-                          x2={p.x}
-                          y2={p.y}
-                          stroke={d.color}
-                          strokeWidth={4}
-                          strokeOpacity={0.20}
-                          vectorEffect="non-scaling-stroke"
-                        />
-                        {/* Glowing data conduit */}
-                        <line
-                          x1="50"
-                          y1="50"
-                          x2={p.x}
-                          y2={p.y}
-                          stroke={d.color}
-                          strokeWidth={1.75}
-                          strokeOpacity={0.9}
-                          vectorEffect="non-scaling-stroke"
-                        />
-                        {/* Dynamic travelling data pulse from Core to Node */}
-                        <circle r="1.3" fill="#ffffff" opacity={0.95}>
-                          <animateMotion
-                            path={`M 50 50 L ${p.x} ${p.y}`}
-                            dur="2s"
-                            repeatCount="indefinite"
-                          />
-                        </circle>
-                        <circle r="2.5" fill={d.color} opacity={0.35}>
-                          <animateMotion
-                            path={`M 50 50 L ${p.x} ${p.y}`}
-                            dur="2s"
-                            repeatCount="indefinite"
-                          />
-                        </circle>
-                      </>
-                    )}
-                    {!isActive && (
-                      <line
-                        x1="50"
-                        y1="50"
-                        x2={p.x}
-                        y2={p.y}
-                        stroke="rgba(255,255,255,0.12)"
-                        strokeWidth={1}
-                        vectorEffect="non-scaling-stroke"
-                        strokeDasharray="2 3"
-                        style={{ transition: 'stroke 0.4s ease', opacity: 0.65 }}
-                      />
-                    )}
-                  </g>
+                  <line
+                    key={d.id}
+                    x1="50"
+                    y1="50"
+                    x2={p.x}
+                    y2={p.y}
+                    stroke={isActive ? d.color : 'rgba(255,255,255,0.10)'}
+                    strokeWidth={isActive ? 1.4 : 1}
+                    vectorEffect="non-scaling-stroke"
+                    strokeDasharray={isActive ? 'none' : '3 4'}
+                    style={{ transition: 'stroke 0.4s ease', opacity: isActive ? 0.9 : 0.7 }}
+                  />
                 );
               })}
             </svg>
 
-            {/* VYRON CORE — Luminous Crystal Processing Anchor */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div
-                className="animate-ping-soft absolute -inset-1.5 rounded-full border transition-colors duration-700"
-                style={{ borderColor: current ? `${current.color}45` : 'rgba(77,124,254,0.35)' }}
-              />
-              <div
-                className="relative flex h-24 w-24 flex-col items-center justify-center rounded-full border border-white/20 bg-void/90 shadow-[0_0_60px_-10px_rgba(77,124,254,0.45)] backdrop-blur-2xl transition-all duration-700 md:h-32 md:w-32"
-                style={{
-                  boxShadow: current
-                    ? `0 0 60px -10px ${current.color}45, inset 0 0 20px ${current.color}20`
-                    : undefined,
-                  borderColor: current ? `${current.color}40` : undefined,
-                }}
-              >
-                <span className="font-display text-sm font-bold tracking-[0.2em] text-white md:text-base">
+              <div className="animate-ping-soft absolute inset-0 rounded-full border border-electric/50" />
+              <div className="glass relative flex h-24 w-24 flex-col items-center justify-center rounded-full shadow-[0_0_70px_-12px_rgba(77,124,254,0.55)] md:h-32 md:w-32">
+                <span className="font-display text-sm font-bold tracking-[0.18em] md:text-base">
                   VYRON
                 </span>
-                <span className="mt-1 text-[8px] tracking-[0.45em] text-white/50 md:text-[9px]">
-                  CORE
-                </span>
+                <span className="mt-1 text-[8px] tracking-[0.4em] text-white/50 md:text-[9px]">CORE</span>
               </div>
             </div>
 
-            {/* Six Discipline Nodes */}
             {disciplines.map((d, i) => {
               const p = nodePosition(i, disciplines.length);
               const isActive = i === active;
@@ -170,28 +110,22 @@ export default function SystemSection() {
                   key={d.id}
                   onClick={() => setActive(i)}
                   onMouseEnter={() => setActive(i)}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2"
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${p.x}%`, top: `${p.y}%` }}
                   aria-label={`Select ${d.name}`}
                 >
-                  {isActive && (
-                    <span
-                      className="animate-ping-soft pointer-events-none absolute -inset-1 rounded-full border opacity-45"
-                      style={{ borderColor: d.color }}
-                    />
-                  )}
                   <span
                     className={`relative flex h-12 w-12 items-center justify-center rounded-full border font-display text-[11px] font-semibold backdrop-blur-xl transition-all duration-500 md:h-16 md:w-16 md:text-xs ${
                       isActive
                         ? 'scale-110 border-transparent text-white'
-                        : 'border-white/15 bg-void/80 text-white/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] hover:scale-105 hover:border-white/35 hover:text-white'
+                        : 'border-white/15 bg-white/[0.03] text-white/60 hover:border-white/35 hover:text-white'
                     }`}
                     style={
                       isActive
                         ? {
-                            background: `linear-gradient(135deg, ${d.color}45, ${d.color}15)`,
+                            background: `linear-gradient(135deg, ${d.color}55, ${d.color}22)`,
                             borderColor: d.color,
-                            boxShadow: `0 0 36px -4px ${d.color}80, inset 0 0 12px ${d.color}30`,
+                            boxShadow: `0 0 44px -6px ${d.color}`,
                           }
                         : undefined
                     }
@@ -199,16 +133,10 @@ export default function SystemSection() {
                     {d.code}
                   </span>
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 flex items-center gap-1.5 whitespace-nowrap text-[9px] font-medium tracking-[0.3em] transition-colors duration-300 md:text-[10px] ${
+                    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-medium tracking-[0.3em] transition-colors duration-300 md:text-[10px] ${
                       labelAbove ? 'bottom-full mb-2.5' : 'top-full mt-2.5'
                     } ${isActive ? 'text-white' : 'text-white/40'}`}
                   >
-                    {isActive && (
-                      <span
-                        className="h-1 w-1 rounded-full animate-pulse"
-                        style={{ backgroundColor: d.color }}
-                      />
-                    )}
                     {d.key}
                   </span>
                 </button>
@@ -216,7 +144,6 @@ export default function SystemSection() {
             })}
           </motion.div>
 
-          {/* Interactive Glass Detail Card */}
           <div className="relative min-h-[380px] lg:min-h-[440px]" data-cursor>
             <AnimatePresence mode="wait">
               {current && (
@@ -226,28 +153,21 @@ export default function SystemSection() {
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, y: -18, filter: 'blur(6px)' }}
                   transition={{ duration: 0.5, ease: EASE }}
-                  className="relative overflow-hidden rounded-3xl border border-white/15 bg-ink/75 p-8 backdrop-blur-2xl shadow-[0_30px_90px_-20px_rgba(0,0,0,0.85)] sm:p-10 transition-colors duration-500"
-                  style={{ borderColor: `${current.color}30` }}
+                  className="glass relative overflow-hidden rounded-3xl p-8 sm:p-10"
                 >
                   <div
-                    className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full blur-[100px] transition-colors duration-700 opacity-60"
-                    style={{ backgroundColor: `${current.color}25` }}
+                    className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full blur-[90px] transition-colors duration-700"
+                    style={{ backgroundColor: `${current.color}30` }}
                   />
-                  <span className="text-stroke-faint pointer-events-none absolute -top-4 right-4 font-display text-[7rem] font-bold leading-none select-none opacity-40 sm:text-[9rem]">
+                  <span className="text-stroke-faint pointer-events-none absolute -top-4 right-4 font-display text-[7rem] font-bold leading-none sm:text-[9rem]">
                     {current.code}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full animate-pulse"
-                      style={{ backgroundColor: current.color }}
-                    />
-                    <p
-                      className="text-[11px] font-semibold tracking-[0.45em]"
-                      style={{ color: current.color }}
-                    >
-                      {current.key} // {current.name.toUpperCase()}
-                    </p>
-                  </div>
+                  <p
+                    className="text-[11px] font-semibold tracking-[0.45em]"
+                    style={{ color: current.color }}
+                  >
+                    {current.key} — {current.name.toUpperCase()}
+                  </p>
                   <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                     {current.tagline}
                   </h3>
@@ -258,7 +178,7 @@ export default function SystemSection() {
                     {current.capabilities.map((c) => (
                       <span
                         key={c}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs text-white/70 transition-colors hover:border-white/25 hover:text-white"
+                        className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-white/70"
                       >
                         {c}
                       </span>
@@ -266,7 +186,7 @@ export default function SystemSection() {
                   </div>
                   <button
                     onClick={() => scrollToId('#services')}
-                    className="group mt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.22em] text-white/70 transition-all duration-300 hover:text-white hover:gap-2.5"
+                    className="group mt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.22em] text-white/70 transition-colors hover:text-white"
                   >
                     EXPLORE THE PRACTICE
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -280,14 +200,7 @@ export default function SystemSection() {
                         className={`h-1 rounded-full transition-all duration-500 ${
                           i === active ? 'w-10' : 'w-4 bg-white/15 hover:bg-white/30'
                         }`}
-                        style={
-                          i === active
-                            ? {
-                                backgroundColor: current.color,
-                                boxShadow: `0 0 12px ${current.color}80`,
-                              }
-                            : undefined
-                        }
+                        style={i === active ? { backgroundColor: current.color } : undefined}
                       />
                     ))}
                   </div>

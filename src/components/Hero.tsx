@@ -34,12 +34,11 @@ export default function Hero({ onStart }: { onStart: () => void }) {
   return (
     <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden">
       <motion.div style={{ opacity: glowOpacity }} className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-[46%] h-[62vmin] w-[86vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.11] blur-[110px]" />
-        <div className="absolute left-[18%] top-[24%] h-[30vmin] w-[30vmin] rounded-full bg-iris/[0.10] blur-[100px]" />
+        <div className="absolute left-1/2 top-[46%] h-[62vmin] w-[86vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.13] blur-[110px]" />
+        <div className="absolute left-[18%] top-[24%] h-[30vmin] w-[30vmin] rounded-full bg-iris/[0.12] blur-[100px]" />
         <div className="absolute bottom-0 left-1/2 h-40 w-[120%] -translate-x-1/2 bg-gradient-to-t from-void to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_46%,transparent_38%,rgba(2,4,10,0.55)_100%)]" />
         <div
-          className="absolute inset-0 opacity-[0.45]"
+          className="absolute inset-0 opacity-[0.5]"
           style={{
             backgroundImage:
               'linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px)',
@@ -62,7 +61,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-5 pb-12 pt-24 text-center sm:px-8"
       >
-        <h1 className="font-display text-[clamp(2.5rem,10.5vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em]">
+        <h1 className="font-display text-[clamp(2.9rem,11vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em]">
           <HeadlineLine delay={0.2}>DIGITAL</HeadlineLine>
           <HeadlineLine delay={0.32}>
             <span className="text-stroke">GROWTH,</span>
@@ -94,7 +93,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             <Magnetic strength={0.3}>
               <button
                 onClick={onStart}
-                className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-white px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_50px_-8px_rgba(77,124,254,0.75)] active:scale-[0.98]"
+                className="group flex items-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_60px_-8px_rgba(77,124,254,0.9)]"
               >
                 START A PROJECT
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -103,7 +102,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             <Magnetic strength={0.3}>
               <button
                 onClick={() => scrollToId('#work')}
-                className="glass rounded-full px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-white/85 transition-all duration-300 hover:border-white/35 hover:bg-white/[0.06] hover:text-white active:scale-[0.98]"
+                className="glass rounded-full px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-white/85 transition-all duration-300 hover:border-white/30 hover:text-white"
               >
                 EXPLORE OUR WORK
               </button>

@@ -54,11 +54,6 @@ body {
   }
 }
 
-:focus-visible {
-  outline: 2px solid #4d7cfe;
-  outline-offset: 3px;
-}
-
 /* ---------- signature utilities ---------- */
 
 .text-stroke {
@@ -240,10 +235,7 @@ select.field option {
   .animate-spin-rev,
   .animate-floaty,
   .animate-bar,
-  .flow-dash,
-  .animate-ping-soft,
-  .animate-glow,
-  .animate-line-grow {
+  .flow-dash {
     animation: none;
   }
 }

@@ -59,7 +59,7 @@ export const FALLBACK_SERVICES: Service[] = [
     name: 'Growth & Performance',
     tagline: 'Compounding growth loops.',
     description:
-      'Growth as a discipline, not a gamble. Full-funnel performance programs — paid media, CRO and lifecycle — run as continuous experiments, where every euro spent teaches the system how to spend the next one better.',
+      'Growth as a discipline, not a gamble. Full-funnel performance programs — paid media, CRO and lifecycle — run as continuous experiments, where every rupee spent teaches the system how to spend the next one better.',
     deliverables: [
       'Paid media & performance marketing',
       'Conversion rate optimization',

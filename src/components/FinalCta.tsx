@@ -153,9 +153,9 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
 
           <motion.div
             style={{ opacity: actionOpacity, y: actionY, scale: actionScale }}
-            className="mt-10 flex flex-col items-center gap-6 sm:mt-12 sm:gap-8"
+            className="mt-10 flex flex-col items-center sm:mt-12"
           >
-            <Magnetic strength={0.4}>
+            <Magnetic strength={0.22}>
               <button
                 onClick={onStart}
                 className="group relative flex h-36 w-36 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_100px_-10px_rgba(77,124,254,0.9)] sm:h-44 sm:w-44"
@@ -167,19 +167,29 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
               </button>
             </Magnetic>
 
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
+            {/* Positioned comfortably further down so magnetic pull never interferes with selecting links */}
+            <div className="relative z-20 mt-16 flex flex-col items-center gap-4 sm:mt-24 sm:flex-row sm:gap-8">
               <a
-                href="mailto:hello@vyron.studio"
+                href="mailto:hello@vyron.in"
                 className="text-sm tracking-[0.08em] text-white/60 underline decoration-white/25 underline-offset-8 transition-colors hover:text-white hover:decoration-electric"
               >
-                hello@vyron.studio
+                hello@vyron.in
+              </a>
+              <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
+              <a
+                href="https://wa.me/919845012345?text=Hi%20VYRON%2C%20let%27s%20discuss%20a%20project"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm tracking-[0.08em] text-emerald-400/90 underline decoration-emerald-400/30 underline-offset-8 transition-colors hover:text-emerald-300"
+              >
+                WhatsApp: +91 98450 12345 ↗
               </a>
               <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
               <button
                 onClick={() => scrollToId('#work')}
                 className="text-[12px] font-semibold tracking-[0.22em] text-white/60 transition-colors hover:text-white"
               >
-                OR EXPLORE OUR WORK →
+                EXPLORE WORK →
               </button>
             </div>
           </motion.div>

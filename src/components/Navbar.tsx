@@ -41,10 +41,10 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
       >
         <div className="mx-auto max-w-7xl px-3 sm:px-6">
           <nav
-            className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-2xl transition-all duration-500 sm:px-5 ${
+            className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all duration-500 sm:px-5 ${
               scrolled
-                ? 'border-white/12 bg-black/65 shadow-[0_12px_50px_-12px_rgba(77,124,254,0.25)]'
-                : 'border-white/[0.08] bg-black/35'
+                ? 'border-white/10 bg-black/55 shadow-[0_12px_50px_-12px_rgba(77,124,254,0.25)]'
+                : 'border-white/[0.07] bg-black/25'
             }`}
           >
             <button
@@ -58,6 +58,10 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
               <VyronMark className="h-7 w-7 transition-transform duration-500 group-hover:rotate-[8deg]" />
               <span className="font-display text-[15px] font-semibold tracking-[0.22em] text-white">
                 VYRON<sup className="text-[8px] font-normal text-white/50">®</sup>
+              </span>
+              <span className="ml-1.5 hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[9px] tracking-[0.16em] text-white/55 md:inline-flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                BLR · BOM
               </span>
             </button>
 

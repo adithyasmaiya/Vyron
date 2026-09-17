@@ -3,8 +3,8 @@ import { getFallbackDataForPath } from '../lib/fallbackData';
 
 export function useApi<T>(path: string) {
   const fallback = getFallbackDataForPath<T>(path);
-  const [data, setData] = useState<T[]>(() => fallback || []);
-  const [loading, setLoading] = useState(() => !fallback);
+  const [data, setData] = useState<T[]>(fallback || []);
+  const [loading, setLoading] = useState(!fallback);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
