@@ -15,16 +15,16 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
   return (
     <article
       ref={ref}
-      className="sticky overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]"
-      style={{ top: `${88 + index * 30}px` }}
+      className="group sticky overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] transition-colors hover:border-white/20"
+      style={{ top: `${88 + index * 26}px` }}
       data-cursor
     >
-      <div className="relative h-[80vh] min-h-[560px] w-full">
+      <div className="relative h-[78vh] min-h-[490px] sm:min-h-[540px] w-full">
         <motion.img
           src={p.image}
           alt={p.title}
           style={{ y: imgY }}
-          className="absolute inset-0 h-[120%] w-full scale-105 object-cover"
+          className="absolute inset-0 h-[120%] w-full scale-105 object-cover transition-transform duration-700 group-hover:scale-[1.08]"
           loading={index === 0 ? 'eager' : 'lazy'}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-void via-void/35 to-void/10" />
