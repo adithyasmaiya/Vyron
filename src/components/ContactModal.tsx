@@ -30,12 +30,14 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
     };
   }, [open, onClose]);
 
-  useEffect(() => {
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
       setStatus('idle');
       setErrorMsg('');
     }
-  }, [open]);
+  }
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();

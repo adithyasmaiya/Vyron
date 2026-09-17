@@ -3,13 +3,12 @@ import { getFallbackDataForPath } from '../lib/fallbackData';
 
 export function useApi<T>(path: string) {
   const fallback = getFallbackDataForPath<T>(path);
-  const [data, setData] = useState<T[]>(fallback || []);
-  const [loading, setLoading] = useState(!fallback);
+  const [data, setData] = useState<T[]>(() => fallback || []);
+  const [loading, setLoading] = useState(() => !fallback);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let alive = true;
-    if (!fallback) setLoading(true);
 
     fetch(path)
       .then(async (r) => {
@@ -45,7 +44,7 @@ export function useApi<T>(path: string) {
     return () => {
       alive = false;
     };
-  }, [path]);
+  }, [path, fallback]);
 
   return { data, loading, error };
 }

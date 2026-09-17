@@ -58,11 +58,11 @@ function apiDevMiddleware(env: Record<string, string>): Plugin {
                   status: 'new',
                 }),
               });
-              const data = (await sbRes.json().catch(() => ({}))) as any;
+              const data = (await sbRes.json().catch(() => ({}))) as Record<string, unknown>;
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = sbRes.ok ? 201 : 400;
-              res.end(JSON.stringify(sbRes.ok ? { ok: true, id: (Array.isArray(data) ? data[0]?.id : data?.id) || 1 } : data));
-            } catch (err: any) {
+              res.end(JSON.stringify(sbRes.ok ? { ok: true, id: (Array.isArray(data) ? (data[0] as { id?: number })?.id : (data as { id?: number })?.id) || 1 } : data));
+            } catch {
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = 201;
               res.end(JSON.stringify({ ok: true, id: 1 }));
@@ -105,10 +105,12 @@ export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), ['VITE_', 'NEXT_PUBLIC_']);
   const plugins = [react(), tailwindcss(), apiDevMiddleware(env)];
   try {
-    // @ts-ignore
+    // @ts-expect-error optional source tags
     const m = await import('./.vite-source-tags.js');
     plugins.push(m.sourceTags());
-  } catch {}
+  } catch {
+    // optional source tags file not present
+  }
 
   const processEnvDefines: Record<string, string> = {};
   for (const [key, value] of Object.entries(env)) {

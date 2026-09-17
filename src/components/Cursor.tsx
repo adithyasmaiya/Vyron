@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function Cursor() {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  });
   const [hovering, setHovering] = useState(false);
   const [pressed, setPressed] = useState(false);
   const x = useMotionValue(-100);
@@ -11,8 +14,7 @@ export default function Cursor() {
   const ry = useSpring(y, { stiffness: 520, damping: 42, mass: 0.55 });
 
   useEffect(() => {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    setEnabled(true);
+    if (!enabled) return;
     const move = (e: MouseEvent) => {
       x.set(e.clientX);
       y.set(e.clientY);
@@ -34,7 +36,7 @@ export default function Cursor() {
       window.removeEventListener('mousedown', down);
       window.removeEventListener('mouseup', up);
     };
-  }, [x, y]);
+  }, [x, y, enabled]);
 
   if (!enabled) return null;
 

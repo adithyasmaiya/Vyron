@@ -223,6 +223,11 @@ function LuminousCore() {
   );
 }
 
+function pseudoRandom(seed: number) {
+  const val = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+  return val - Math.floor(val);
+}
+
 // Ambient Cosmic Stardust Particles
 function StarDust({
   count = typeof window !== 'undefined' && window.innerWidth < 768 ? 130 : 220,
@@ -234,9 +239,9 @@ function StarDust({
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const r = 4.2 + Math.random() * 6.5;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
+      const r = 4.2 + pseudoRandom(i * 3 + 1) * 6.5;
+      const theta = pseudoRandom(i * 3 + 2) * Math.PI * 2;
+      const phi = Math.acos(2 * pseudoRandom(i * 3 + 3) - 1);
       arr[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       arr[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.7;
       arr[i * 3 + 2] = r * Math.cos(phi) - 2.5;
