@@ -18,10 +18,17 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
   const [errorMsg, setErrorMsg] = useState('');
 
   const close = useCallback(() => {
+    if (status === 'success') {
+      setName('');
+      setEmail('');
+      setCompany('');
+      setMessage('');
+      setBudget(BUDGETS[1]);
+    }
     setStatus('idle');
     setErrorMsg('');
     onClose();
-  }, [onClose]);
+  }, [onClose, status]);
 
   useEffect(() => {
     if (!open) return;
@@ -39,13 +46,40 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (status === 'sending') return;
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      setStatus('error');
+      setErrorMsg('Please complete all required fields (Name, Email, Project brief).');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setStatus('error');
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+    if (trimmedMessage.length < 10) {
+      setStatus('error');
+      setErrorMsg('Please provide a brief with at least 10 characters.');
+      return;
+    }
+
     setStatus('sending');
     setErrorMsg('');
     try {
       const res = await fetch('/api/inquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, company, budget, message }),
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          company: company.trim(),
+          budget,
+          message: trimmedMessage,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error || 'Something went wrong. Please try again.');
