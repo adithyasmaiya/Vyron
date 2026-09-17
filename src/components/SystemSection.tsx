@@ -75,18 +75,31 @@ export default function SystemSection() {
                 const p = nodePosition(i, disciplines.length);
                 const isActive = i === active;
                 return (
-                  <line
-                    key={d.id}
-                    x1="50"
-                    y1="50"
-                    x2={p.x}
-                    y2={p.y}
-                    stroke={isActive ? d.color : 'rgba(255,255,255,0.10)'}
-                    strokeWidth={isActive ? 1.4 : 1}
-                    vectorEffect="non-scaling-stroke"
-                    strokeDasharray={isActive ? 'none' : '3 4'}
-                    style={{ transition: 'stroke 0.4s ease', opacity: isActive ? 0.9 : 0.7 }}
-                  />
+                  <g key={d.id}>
+                    {isActive && (
+                      <line
+                        x1="50"
+                        y1="50"
+                        x2={p.x}
+                        y2={p.y}
+                        stroke={d.color}
+                        strokeWidth={3}
+                        strokeOpacity={0.25}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    )}
+                    <line
+                      x1="50"
+                      y1="50"
+                      x2={p.x}
+                      y2={p.y}
+                      stroke={isActive ? d.color : 'rgba(255,255,255,0.10)'}
+                      strokeWidth={isActive ? 1.5 : 1}
+                      vectorEffect="non-scaling-stroke"
+                      strokeDasharray={isActive ? 'none' : '3 4'}
+                      style={{ transition: 'stroke 0.4s ease', opacity: isActive ? 0.95 : 0.7 }}
+                    />
+                  </g>
                 );
               })}
             </svg>
