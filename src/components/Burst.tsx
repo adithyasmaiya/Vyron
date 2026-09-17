@@ -64,8 +64,9 @@ export default function Burst() {
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
 
   const vw = typeof window !== 'undefined' ? window.innerWidth : 1200;
-  const radius = Math.min(360, vw * 0.3);
+  const radius = Math.min(360, Math.max(120, vw * 0.28));
   const isMobile = vw < 768;
+  const stepX = isMobile ? Math.min(100, Math.floor((vw - 48) / 3)) : vw < 1024 ? 120 : 148;
 
   const orbScale = useTransform(p, [0, 0.32, 0.55], [0.55, 1.05, 0]);
   const orbOpacity = useTransform(p, [0.42, 0.56], [1, 0]);
@@ -129,7 +130,7 @@ export default function Burst() {
 
           {items.map((d, i) => {
             const angle = i * 60 - 90;
-            const finalX = isMobile ? ((i % 3) - 1) * 112 : (i - 2.5) * 148;
+            const finalX = isMobile ? ((i % 3) - 1) * stepX : (i - 2.5) * stepX;
             const finalY = isMobile ? (i < 3 ? 96 : 196) : 168;
             return (
               <Shard
