@@ -64,10 +64,10 @@ export default function About() {
                 ry.set(0);
               }}
               style={{ rotateX: srx, rotateY: sry, transformStyle: 'preserve-3d' }}
-              className="group relative overflow-hidden rounded-[1.75rem] border border-white/10"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 shadow-[0_30px_90px_-25px_rgba(0,0,0,0.8)] transition-colors hover:border-white/20"
               data-cursor
             >
-              <div className="relative h-[480px] w-full overflow-hidden sm:h-[560px]">
+              <div className="relative h-[420px] w-full overflow-hidden sm:h-[520px] md:h-[560px]">
                 <motion.img
                   src="/images/about-core.jpg"
                   alt="VYRON monolith — dark glass slab with violet edge light"

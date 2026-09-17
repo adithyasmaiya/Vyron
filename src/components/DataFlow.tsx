@@ -44,7 +44,7 @@ export default function DataFlow() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 1, ease: EASE }}
-          className="glass relative mt-12 overflow-hidden rounded-[1.75rem] p-4 sm:p-8"
+          className="glass relative mt-12 overflow-hidden rounded-[1.75rem] border border-white/10 p-4 sm:p-8"
           data-cursor
         >
           <div
