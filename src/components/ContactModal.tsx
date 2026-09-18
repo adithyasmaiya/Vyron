@@ -4,7 +4,6 @@ import { Check, Loader2, X } from 'lucide-react';
 import { startScroll, stopScroll } from '../lib/scroll';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const BUDGETS = ['Under ₹5 Lakhs', '₹5L – ₹15 Lakhs', '₹15L – ₹35 Lakhs', '₹35 Lakhs+'];
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -12,7 +11,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
-  const [budget, setBudget] = useState(BUDGETS[1]);
+  const [budget, setBudget] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -23,7 +22,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
       setEmail('');
       setCompany('');
       setMessage('');
-      setBudget(BUDGETS[1]);
+      setBudget('');
     }
     setStatus('idle');
     setErrorMsg('');
@@ -77,7 +76,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
           name: trimmedName,
           email: trimmedEmail,
           company: company.trim(),
-          budget,
+          budget: budget.trim(),
           message: trimmedMessage,
         }),
       });
@@ -168,11 +167,14 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                     </div>
                     <div>
                       <label htmlFor="vy-budget" className="mb-2 block text-[11px] tracking-[0.25em] text-white/45">PROJECT BUDGET (INR)</label>
-                      <select id="vy-budget" className="field" value={budget} onChange={(e) => setBudget(e.target.value)}>
-                        {BUDGETS.map((b) => (
-                          <option key={b} value={b}>{b}</option>
-                        ))}
-                      </select>
+                      <input
+                        id="vy-budget"
+                        type="text"
+                        className="field"
+                        placeholder="e.g. ₹10 Lakhs or ₹5L – ₹15L"
+                        value={budget}
+                        onChange={(e) => setBudget(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div>
