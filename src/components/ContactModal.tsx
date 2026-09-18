@@ -129,7 +129,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                 </motion.span>
                 <h3 className="mt-6 font-display text-3xl font-semibold tracking-tight">Signal received.</h3>
                 <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/55">
-                  Your brief is in the system. Our team in Bengaluru will respond within one business day.
+                  Your brief is in the system. Our team will respond within one business day.
                 </p>
                 <button
                   onClick={close}
@@ -140,12 +140,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
               </div>
             ) : (
               <>
-                <div className="flex items-center gap-2">
-                  <p className="text-[10px] font-medium tracking-[0.45em] text-electric">START A PROJECT</p>
-                  <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[9px] tracking-[0.2em] text-white/50">
-                    BENGALURU
-                  </span>
-                </div>
+                <p className="text-[10px] font-medium tracking-[0.45em] text-electric">START A PROJECT</p>
                 <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                   Tell us where you&apos;re headed.
                 </h3>
