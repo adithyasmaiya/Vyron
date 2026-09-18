@@ -171,7 +171,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                         id="vy-budget"
                         type="text"
                         className="field"
-                        placeholder="e.g. ₹10 Lakhs or ₹5L – ₹15L"
+                        placeholder="e.g. ₹1 Lakh or ₹5 Lakhs"
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
                       />
