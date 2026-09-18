@@ -105,7 +105,7 @@ export default function About() {
             className="flex flex-col justify-center"
           >
             <p className="text-[15px] leading-relaxed text-white/60 sm:text-base">
-              Engineered in Bengaluru and Mumbai, VYRON is a multidisciplinary growth studio
+              Engineered in Bengaluru, VYRON is a multidisciplinary growth studio
               operating where high-end design, deep engineering and compounding growth converge.
               No silos, no handoffs lost in translation — one team fluent in technology,
               design, content, performance marketing, automation and intelligence.

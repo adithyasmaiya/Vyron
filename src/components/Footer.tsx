@@ -119,16 +119,6 @@ export default function Footer() {
                   Karnataka 560038
                 </p>
               </div>
-              <div className="border-l border-white/[0.08] pl-3">
-                <p className="font-mono text-[11px] font-semibold tracking-wider text-white/85 uppercase">
-                  MUMBAI
-                </p>
-                <p className="mt-1 leading-relaxed text-white/45">
-                  Bandra Kurla Complex
-                  <br />
-                  Maharashtra 400051
-                </p>
-              </div>
               <div className="flex items-center gap-2 pt-1 font-mono text-[10px] tracking-[0.2em] text-electric/90">
                 <span className="h-1 w-1 rounded-full bg-electric" />
                 <span>TIMEZONE: IST (UTC+5:30)</span>

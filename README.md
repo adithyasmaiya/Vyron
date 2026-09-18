@@ -1,6 +1,6 @@
 # VYRON® — Digital Growth Studio
 
-A multidisciplinary digital growth studio website — technology, design, content, performance marketing, automation and intelligence in one connected system. Engineered in Bengaluru and Mumbai for category-defining Indian brands and fast-scaling global ventures.
+A multidisciplinary digital growth studio website — technology, design, content, performance marketing, automation and intelligence in one connected system. Engineered in Bengaluru for category-defining Indian brands and fast-scaling global ventures.
 
 ---
 
