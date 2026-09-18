@@ -100,12 +100,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Studio Hubs Column */}
+          {/* Studio Base Column */}
           <div>
             <div className="flex items-center gap-2">
               <span className="h-1 w-1 rounded-full bg-white/30" />
               <p className="font-mono text-[10px] tracking-[0.35em] text-white/40 uppercase">
-                STUDIO HUBS
+                STUDIO
               </p>
             </div>
             <div className="mt-5 space-y-4 text-xs">
@@ -114,9 +114,7 @@ export default function Footer() {
                   BENGALURU
                 </p>
                 <p className="mt-1 leading-relaxed text-white/45">
-                  100ft Road, Indiranagar
-                  <br />
-                  Karnataka 560038
+                  Online Studio · India
                 </p>
               </div>
               <div className="flex items-center gap-2 pt-1 font-mono text-[10px] tracking-[0.2em] text-electric/90">
