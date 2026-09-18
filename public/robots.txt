@@ -1,0 +1,5 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap: Configure full production URL upon domain establishment (e.g. https://<production-domain>/sitemap.xml)
