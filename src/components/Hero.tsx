@@ -9,14 +9,22 @@ const HeroScene = lazy(() => import('./HeroScene'));
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-function HeadlineLine({ children, delay }: { children: React.ReactNode; delay: number }) {
+function HeadlineLine({
+  children,
+  delay,
+  ready = true,
+}: {
+  children: React.ReactNode;
+  delay: number;
+  ready?: boolean;
+}) {
   return (
     <span className="block overflow-hidden pb-[0.06em]">
       <motion.span
         className="block"
         initial={{ y: '112%' }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1.15, ease: EASE, delay }}
+        animate={ready ? { y: 0 } : { y: '112%' }}
+        transition={{ duration: 1.05, ease: EASE, delay }}
       >
         {children}
       </motion.span>
@@ -24,7 +32,7 @@ function HeadlineLine({ children, delay }: { children: React.ReactNode; delay: n
   );
 }
 
-export default function Hero({ onStart }: { onStart: () => void }) {
+export default function Hero({ onStart, ready = true }: { onStart: () => void; ready?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 180]);
@@ -62,11 +70,13 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-5 pb-12 pt-24 text-center sm:px-8"
       >
         <h1 className="font-display text-[clamp(2.15rem,9.5vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em] sm:text-[clamp(2.9rem,11vw,10rem)]">
-          <HeadlineLine delay={0.2}>DIGITAL</HeadlineLine>
-          <HeadlineLine delay={0.32}>
+          <HeadlineLine delay={0.1} ready={ready}>
+            DIGITAL
+          </HeadlineLine>
+          <HeadlineLine delay={0.22} ready={ready}>
             <span className="text-stroke">GROWTH,</span>
           </HeadlineLine>
-          <HeadlineLine delay={0.44}>
+          <HeadlineLine delay={0.34} ready={ready}>
             <span className="bg-gradient-to-r from-[#9db4ff] via-electric to-iris bg-clip-text text-transparent">
               REIMAGINED
             </span>
@@ -76,8 +86,8 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         <div className="mt-8 flex w-full flex-col items-center">
           <motion.p
             initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: EASE, delay: 1.05 }}
+            animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.52 }}
             className="max-w-xl text-balance text-[15px] leading-relaxed text-white/60 sm:text-base"
           >
             We build digital experiences, growth systems and intelligent automation
@@ -86,8 +96,8 @@ export default function Hero({ onStart }: { onStart: () => void }) {
 
           <motion.div
             initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: EASE, delay: 1.2 }}
+            animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.68 }}
             className="mt-8 flex w-full flex-col items-center justify-center gap-3.5 sm:w-auto sm:flex-row sm:gap-4"
           >
             <Magnetic strength={0.3} className="w-full max-w-xs sm:w-auto">
@@ -113,8 +123,8 @@ export default function Hero({ onStart }: { onStart: () => void }) {
 
       <motion.button
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 1 }}
+        animate={ready ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 1.05, duration: 0.8 }}
         onClick={() => scrollToId('#premise')}
         className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/35 transition-colors hover:text-white/70 md:flex"
         aria-label="Scroll to explore"

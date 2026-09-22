@@ -110,10 +110,10 @@ export default function App() {
 
       <AnimatePresence>{loading && <Preloader onDone={finishLoad} />}</AnimatePresence>
 
-      <Navbar onStart={openModal} />
+      <Navbar onStart={openModal} ready={!loading} />
 
       <main>
-        <Hero onStart={openModal} />
+        <Hero onStart={openModal} ready={!loading} />
         <Marquee items={MARQUEE_ITEMS} />
         <Intro />
         <SystemSection />

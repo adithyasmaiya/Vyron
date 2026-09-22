@@ -13,10 +13,11 @@ export function scrollToId(selector: string) {
   const el = document.querySelector(selector) as HTMLElement | null;
   if (!el) return;
   const lenis = getLenis();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   if (lenis) {
     lenis.scrollTo(el, {
-      offset: -72,
-      duration: 1.7,
+      offset: isMobile ? -58 : -72,
+      duration: isMobile ? 0.95 : 1.7,
       easing: (t: number) => 1 - Math.pow(1 - t, 4),
     });
   } else {
@@ -26,8 +27,12 @@ export function scrollToId(selector: string) {
 
 export function scrollToTop() {
   const lenis = getLenis();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   if (lenis) {
-    lenis.scrollTo(0, { duration: 1.8, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+    lenis.scrollTo(0, {
+      duration: isMobile ? 0.95 : 1.8,
+      easing: (t: number) => 1 - Math.pow(1 - t, 4),
+    });
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
