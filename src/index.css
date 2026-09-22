@@ -129,6 +129,15 @@ select.field option {
   color: #edeff7;
 }
 
+/* ---------- mobile touch & safe area ---------- */
+.safe-bottom {
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.touch-momentum {
+  -webkit-overflow-scrolling: touch;
+}
+
 /* ---------- motion ---------- */
 
 @keyframes marquee {

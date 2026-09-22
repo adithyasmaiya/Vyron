@@ -1,16 +1,16 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Undulating interactive cyber wave grid — highly optimized
-function DigitalWaveField() {
+// Undulating interactive cyber wave grid — dynamically scaled for mobile vs desktop
+function DigitalWaveField({ isMobile = false }: { isMobile?: boolean }) {
   const meshRef = useRef<THREE.Points>(null);
   const pointer = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
 
-  // 44 x 28 = 1,232 points: lightweight, high-performance 120fps
-  const cols = 44;
-  const rows = 28;
+  // Desktop: 44 x 28 = 1,232 points. Mobile <768px: 26 x 16 = 416 points (~66% reduction in per-frame math)
+  const cols = isMobile ? 26 : 44;
+  const rows = isMobile ? 16 : 28;
   const count = cols * rows;
 
   const { positions, initialPositions, colors } = useMemo(() => {
@@ -22,14 +22,17 @@ function DigitalWaveField() {
     const color2 = new THREE.Color('#4d7cfe'); // Electric blue
     const color3 = new THREE.Color('#8b5cf6'); // Iris purple
 
+    const spanX = isMobile ? 22 : 26;
+    const spanY = isMobile ? 14 : 16;
+
     let idx = 0;
     for (let iy = 0; iy < rows; iy++) {
       for (let ix = 0; ix < cols; ix++) {
         const u = ix / (cols - 1);
         const v = iy / (rows - 1);
 
-        const x = (u - 0.5) * 26;
-        const y = (v - 0.5) * 16;
+        const x = (u - 0.5) * spanX;
+        const y = (v - 0.5) * spanY;
         const z = 0;
 
         pos[idx * 3] = x;
@@ -55,7 +58,7 @@ function DigitalWaveField() {
       }
     }
     return { positions: pos, initialPositions: init, colors: col };
-  }, [cols, rows, count]);
+  }, [cols, rows, count, isMobile]);
 
   useFrame((state) => {
     // Skip calculations completely when hero is scrolled out of view
@@ -112,7 +115,7 @@ function DigitalWaveField() {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.082}
+        size={isMobile ? 0.102 : 0.082}
         vertexColors
         transparent
         opacity={0.76}
@@ -124,8 +127,8 @@ function DigitalWaveField() {
   );
 }
 
-// Elegant Prismatic Core with Orbiting Energy Rings
-function LuminousCore() {
+// Elegant Prismatic Core with Orbiting Energy Rings — responsively scaled for mobile viewports
+function LuminousCore({ scale = 1 }: { scale?: number }) {
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -177,7 +180,7 @@ function LuminousCore() {
   });
 
   return (
-    <group ref={groupRef} position={[0, 0.4, 0.2]}>
+    <group ref={groupRef} position={[0, 0.38, 0.2]} scale={scale}>
       <Float speed={2} rotationIntensity={0.2} floatIntensity={0.6}>
         {/* Crystal Core — high-performance standard material with crisp specular facet response */}
         <mesh ref={coreRef} scale={1.15}>
@@ -300,13 +303,19 @@ function StarDust({ count }: { count?: number }) {
   );
 }
 
-// Micro camera parallax rig: restrained glide (max ±0.22 X, ±0.14 Y) with heavy cinematic damping
-function CameraRig() {
+// Micro camera parallax rig: restrained glide (max ±0.22 X, ±0.14 Y) with harmonic ambient drift on touch
+function CameraRig({ isMobile = false }: { isMobile?: boolean }) {
   useFrame((state) => {
     if (typeof window !== 'undefined' && window.scrollY > window.innerHeight * 1.05) return;
-    const { pointer, camera } = state;
-    const targetX = pointer.x * 0.22;
-    const targetY = pointer.y * 0.14;
+    const { pointer, camera, clock } = state;
+    const t = clock.elapsedTime;
+
+    // On touch devices where pointer cursor isn't moving, add a subtle, elegant ambient harmonic drift
+    const ambientX = isMobile ? Math.sin(t * 0.35) * 0.08 : 0;
+    const ambientY = isMobile ? Math.cos(t * 0.28) * 0.05 : 0;
+
+    const targetX = pointer.x * 0.22 + ambientX;
+    const targetY = pointer.y * 0.14 + ambientY;
     camera.position.x += (targetX - camera.position.x) * 0.025;
     camera.position.y += (targetY - camera.position.y) * 0.025;
   });
@@ -314,11 +323,34 @@ function CameraRig() {
 }
 
 export default function HeroScene() {
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [coreScale, setCoreScale] = useState(() => {
+    if (typeof window === 'undefined') return 1;
+    const w = window.innerWidth;
+    if (w < 400) return 0.76;
+    if (w < 768) return 0.84;
+    return 1;
+  });
+
+  useEffect(() => {
+    const onResize = () => {
+      const w = window.innerWidth;
+      setIsMobile(w < 768);
+      if (w < 400) setCoreScale(0.76);
+      else if (w < 768) setCoreScale(0.84);
+      else setCoreScale(1);
+    };
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const dpr = useMemo<[number, number]>(() => [1, isMobile ? 1.35 : 1.5], [isMobile]);
+
   return (
     <div className="pointer-events-none absolute inset-0">
       <Canvas
-        camera={{ position: [0, 0, 7.8], fov: 42 }}
-        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, isMobile ? 8.1 : 7.8], fov: isMobile ? 44 : 42 }}
+        dpr={dpr}
         gl={{
           antialias: true,
           alpha: true,
@@ -336,10 +368,10 @@ export default function HeroScene() {
         {/* Tertiary Fill Light — cyan cyber edge */}
         <pointLight position={[5, -2.5, 2.5]} intensity={7.5} color="#38bdf8" distance={14} />
 
-        <CameraRig />
-        <DigitalWaveField />
-        <LuminousCore />
-        <StarDust />
+        <CameraRig isMobile={isMobile} />
+        <DigitalWaveField isMobile={isMobile} />
+        <LuminousCore scale={coreScale} />
+        <StarDust count={isMobile ? 110 : 220} />
       </Canvas>
     </div>
   );

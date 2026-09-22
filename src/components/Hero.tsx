@@ -61,7 +61,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-5 pb-12 pt-24 text-center sm:px-8"
       >
-        <h1 className="font-display text-[clamp(2.35rem,10vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em] sm:text-[clamp(2.9rem,11vw,10rem)]">
+        <h1 className="font-display text-[clamp(2.15rem,9.5vw,10rem)] font-bold leading-[0.94] tracking-[-0.03em] sm:text-[clamp(2.9rem,11vw,10rem)]">
           <HeadlineLine delay={0.2}>DIGITAL</HeadlineLine>
           <HeadlineLine delay={0.32}>
             <span className="text-stroke">GROWTH,</span>
@@ -93,7 +93,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             <Magnetic strength={0.3} className="w-full max-w-xs sm:w-auto">
               <button
                 onClick={onStart}
-                className="group relative flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_50px_-6px_rgba(77,124,254,0.85)] active:scale-[0.98] sm:w-auto"
+                className="group relative flex min-h-[48px] w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_50px_-6px_rgba(77,124,254,0.85)] active:scale-[0.98] touch-manipulation sm:w-auto"
               >
                 START A PROJECT
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -102,7 +102,7 @@ export default function Hero({ onStart }: { onStart: () => void }) {
             <Magnetic strength={0.3} className="w-full max-w-xs sm:w-auto">
               <button
                 onClick={() => scrollToId('#work')}
-                className="glass group flex w-full items-center justify-center rounded-full border border-white/12 px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-white/85 transition-all duration-300 hover:border-white/30 hover:bg-white/[0.06] hover:text-white active:scale-[0.98] sm:w-auto"
+                className="glass group flex min-h-[48px] w-full items-center justify-center rounded-full border border-white/12 px-8 py-4 text-[13px] font-semibold tracking-[0.14em] text-white/85 transition-all duration-300 hover:border-white/30 hover:bg-white/[0.06] hover:text-white active:scale-[0.98] touch-manipulation sm:w-auto"
               >
                 EXPLORE OUR WORK
               </button>

@@ -90,7 +90,7 @@ export default function Footer() {
                 <li key={l.href}>
                   <button
                     onClick={() => scrollToId(l.href)}
-                    className="group flex items-center gap-2 font-mono text-[13px] text-white/55 transition-colors duration-300 hover:text-white"
+                    className="group flex min-h-[36px] items-center gap-2 font-mono text-[13px] text-white/55 transition-colors duration-300 hover:text-white active:text-white touch-manipulation"
                   >
                     <span className="h-px w-0 bg-electric transition-all duration-300 group-hover:w-3" />
                     <span>{l.label}</span>
@@ -138,7 +138,7 @@ export default function Footer() {
                   <a
                     href={s.href}
                     onClick={(e) => e.preventDefault()}
-                    className="group flex items-center gap-2 font-mono text-[13px] text-white/55 transition-colors duration-300 hover:text-white"
+                    className="group flex min-h-[36px] items-center gap-2 font-mono text-[13px] text-white/55 transition-colors duration-300 hover:text-white active:text-white touch-manipulation"
                   >
                     <span className="h-px w-0 bg-white/40 transition-all duration-300 group-hover:w-2.5" />
                     <span>{s.label}</span>
@@ -149,7 +149,7 @@ export default function Footer() {
 
             <button
               onClick={scrollToTop}
-              className="group mt-8 flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.02] px-5 py-2.5 font-mono text-[11px] font-medium tracking-[0.22em] text-white/70 backdrop-blur-md transition-all duration-300 hover:border-electric/60 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_0_20px_rgba(77,124,254,0.3)] active:scale-95"
+              className="group mt-8 flex min-h-[44px] items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.02] px-5 py-2.5 font-mono text-[11px] font-medium tracking-[0.22em] text-white/70 backdrop-blur-md transition-all duration-300 hover:border-electric/60 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_0_20px_rgba(77,124,254,0.3)] active:scale-95 touch-manipulation"
               aria-label="Scroll back to top of page"
             >
               <span>BACK TO TOP</span>

@@ -55,7 +55,8 @@ export default function App() {
     const lenis = new Lenis({
       lerp: 0.1,
       wheelMultiplier: 1.05,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1,
+      syncTouch: false,
       smoothWheel: true,
     });
     (window as unknown as { __lenis: Lenis }).__lenis = lenis;

@@ -39,19 +39,19 @@ export default function Intro() {
   const glow = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
 
   return (
-    <section id="premise" ref={ref} className="relative h-[300vh]">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+    <section id="premise" ref={ref} className="relative h-[260vh] sm:h-[300vh]">
+      <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 text-center sm:px-6">
         <motion.div
           style={{ opacity: glow }}
           className="pointer-events-none absolute left-1/2 top-1/2 h-[52vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.09] blur-[120px]"
         />
         <motion.p
           style={{ opacity: subOpacity }}
-          className="absolute top-24 text-[10px] font-medium tracking-[0.5em] text-electric/90 sm:top-28"
+          className="absolute top-14 text-[10px] font-medium tracking-[0.5em] text-electric/90 sm:top-28"
         >
           THE PREMISE
         </motion.p>
-        <h2 className="max-w-5xl font-display text-[clamp(2rem,6.4vw,4.8rem)] font-semibold leading-[1.08] tracking-[-0.02em]">
+        <h2 className="max-w-5xl font-display text-[clamp(1.85rem,6.2vw,4.8rem)] font-semibold leading-[1.1] tracking-[-0.02em]">
           {words.map((w, i) => (
             <Word
               key={i}
@@ -65,7 +65,7 @@ export default function Intro() {
         </h2>
         <motion.p
           style={{ opacity: subOpacity, y: subY }}
-          className="mt-10 max-w-2xl text-balance text-[15px] leading-relaxed text-white/55 sm:text-lg"
+          className="mt-6 sm:mt-10 max-w-2xl text-balance text-[14px] sm:text-[15px] leading-relaxed text-white/55 md:text-lg"
         >
           We combine technology, design, content, performance and automation
           into one connected growth system.

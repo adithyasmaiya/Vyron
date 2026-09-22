@@ -105,9 +105,9 @@ export default function Why() {
   };
 
   return (
-    <section id="why" ref={containerRef} className="relative h-[340vh] scroll-mt-20">
+    <section id="why" ref={containerRef} className="relative h-[290vh] sm:h-[340vh] scroll-mt-20">
       {/* Sticky Presentation Viewport */}
-      <div className="sticky top-0 flex h-screen flex-col justify-between overflow-hidden px-5 py-8 sm:px-8 sm:py-12">
+      <div className="sticky top-0 flex h-[100dvh] flex-col justify-between overflow-hidden px-5 py-5 sm:px-8 sm:py-10">
         {/* Ambient atmospheric depth lighting */}
         <div className="pointer-events-none absolute left-1/2 top-1/4 h-[50vmin] w-[75vmin] -translate-x-1/2 rounded-full bg-electric/[0.05] blur-[140px]" />
         <div className="pointer-events-none absolute -right-20 bottom-1/4 h-[40vmin] w-[40vmin] rounded-full bg-iris/[0.03] blur-[120px]" />
@@ -119,7 +119,7 @@ export default function Why() {
               <span className="absolute h-full w-full animate-ping rounded-full bg-electric/60" />
               <span className="h-1.5 w-1.5 rounded-full bg-electric" />
             </span>
-            <p className="font-mono text-[11px] font-semibold tracking-[0.45em] text-electric uppercase">
+            <p className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.45em] text-electric uppercase">
               WHY VYRON
             </p>
             <span className="hidden sm:inline-block h-3 w-px bg-white/15" />
@@ -127,8 +127,8 @@ export default function Why() {
               OPERATING PRINCIPLES
             </span>
           </div>
-          <h2 className="mt-4 font-display text-[clamp(1.75rem,4vw,3.3rem)] font-semibold leading-[1.16] tracking-[-0.025em]">
-            <span className="mb-1 block sm:mb-2">
+          <h2 className="mt-2.5 sm:mt-4 font-display text-[clamp(1.5rem,3.8vw,3.3rem)] font-semibold leading-[1.16] tracking-[-0.025em]">
+            <span className="mb-0.5 sm:mb-2 block">
               {HEADLINE_WORDS.slice(0, 5).map((item, i) => (
                 <WordHighlight
                   key={i}
@@ -159,14 +159,14 @@ export default function Why() {
           className="flex flex-1 flex-col justify-between"
         >
           {/* Middle: 5 Step Pill Controls (Operating Directive Switcher) */}
-          <div className="no-scrollbar -mx-5 mt-4 flex w-full max-w-4xl items-center justify-start gap-2 overflow-x-auto px-5 pb-1 sm:mx-auto sm:justify-center sm:gap-3 sm:px-0">
+          <div className="no-scrollbar -mx-5 mt-2 sm:mt-4 flex w-full max-w-4xl items-center justify-start gap-2 overflow-x-auto px-5 pb-1 touch-pan-x sm:mx-auto sm:justify-center sm:gap-3 sm:px-0">
             {principles.map((pr, idx) => {
               const isActive = idx === activeStep;
               return (
                 <button
                   key={pr.id}
                   onClick={() => handlePillClick(idx)}
-                  className={`group relative flex shrink-0 items-center gap-2.5 rounded-full px-4 py-2 font-mono text-[11px] tracking-[0.18em] transition-all duration-300 sm:shrink sm:px-5 sm:py-2.5 ${
+                  className={`group relative flex shrink-0 items-center gap-2 rounded-full px-3.5 py-1.5 font-mono text-[10.5px] sm:text-[11px] tracking-[0.16em] transition-all duration-300 active:scale-95 touch-manipulation sm:shrink sm:px-5 sm:py-2.5 ${
                     isActive
                       ? 'border border-electric/60 bg-[#0d111e]/90 text-white shadow-[0_0_24px_-4px_rgba(77,124,254,0.45),0_0_0_1px_rgba(77,124,254,0.2)]'
                       : 'border border-white/[0.09] bg-white/[0.02] text-white/50 hover:border-white/20 hover:bg-white/[0.04] hover:text-white/80'
@@ -197,7 +197,7 @@ export default function Why() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -22, scale: 0.98 }}
                 transition={{ duration: 0.45, ease: EASE }}
-                className="relative w-full overflow-hidden rounded-[2rem] border border-white/[0.12] bg-[#090b12]/95 p-5 backdrop-blur-2xl shadow-[0_24px_80px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.03)] will-change-transform sm:p-10"
+                className="relative w-full overflow-hidden rounded-[1.5rem] border border-white/[0.12] bg-[#090b12]/95 p-4 sm:p-8 md:p-10 backdrop-blur-2xl shadow-[0_24px_80px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.03)] will-change-transform sm:rounded-[2rem]"
               >
                 {/* Top Specular Edge Highlight */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -225,33 +225,33 @@ export default function Why() {
                     <span className="font-mono text-xs tracking-[0.25em] text-white/40">
                       0{activeStep + 1} / 05
                     </span>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white/[0.02] text-white/60">
+                    <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-white/12 bg-white/[0.02] text-white/60">
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </div>
                   </div>
                 </div>
 
                 {/* Box Title */}
-                <h3 className="relative z-10 mt-5 font-display text-[clamp(1.5rem,3.8vw,2.9rem)] font-bold tracking-tight text-white leading-[1.08] sm:text-[clamp(1.75rem,3.8vw,2.9rem)]">
+                <h3 className="relative z-10 mt-3 sm:mt-5 font-display text-[clamp(1.35rem,3.6vw,2.9rem)] font-bold tracking-tight text-white leading-[1.1] sm:text-[clamp(1.75rem,3.8vw,2.9rem)]">
                   {currentPrinciple.title}
                 </h3>
 
                 {/* Box Description */}
-                <p className="relative z-10 mt-4 max-w-2xl text-[13.5px] leading-relaxed text-white/65 sm:text-[15.5px]">
+                <p className="relative z-10 mt-2 sm:mt-4 max-w-2xl text-[12.5px] sm:text-[14px] md:text-[15.5px] leading-relaxed text-white/65">
                   {currentPrinciple.description}
                 </p>
 
                 {/* Value Pillars / System Imperatives */}
-                <div className="relative z-10 mt-5 border-t border-white/[0.08] pt-4 sm:mt-7 sm:pt-5">
-                  <div className="mb-3 flex items-center justify-between">
-                    <p className="font-mono text-[10px] tracking-[0.25em] text-white/35 uppercase">
+                <div className="relative z-10 mt-3.5 sm:mt-7 border-t border-white/[0.08] pt-3 sm:pt-5">
+                  <div className="mb-2 sm:mb-3 flex items-center justify-between">
+                    <p className="font-mono text-[9.5px] sm:text-[10px] tracking-[0.25em] text-white/35 uppercase">
                       CORE SYSTEM IMPERATIVES
                     </p>
                     <span className="font-mono text-[9px] tracking-wider text-white/25">
                       VERIFIED DIRECTIVE
                     </span>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {(PRINCIPLE_TAGS[currentPrinciple.id] || [
                       'Continuous Momentum',
                       'Systemic Thinking',
@@ -259,7 +259,7 @@ export default function Why() {
                     ]).map((tag) => (
                       <span
                         key={tag}
-                        className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[10px] text-white/75 transition-colors duration-300 hover:border-white/20 hover:text-white sm:px-3.5 sm:py-1.5 sm:text-[11px]"
+                        className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-2.5 sm:px-3.5 py-1 font-mono text-[9.5px] sm:text-[11px] text-white/75 transition-colors duration-300 hover:border-white/20 hover:text-white"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-electric shadow-[0_0_6px_#4d7cfe]" />
                         {tag}

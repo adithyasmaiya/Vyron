@@ -23,11 +23,19 @@ export default function About() {
   const sry = useSpring(ry, { stiffness: 160, damping: 18 });
 
   const onTilt = (e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      return;
+    }
     const el = cardRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
     ry.set(((e.clientX - r.left) / r.width - 0.5) * 10);
     rx.set(-((e.clientY - r.top) / r.height - 0.5) * 10);
+  };
+
+  const resetTilt = () => {
+    rx.set(0);
+    ry.set(0);
   };
 
   return (
@@ -59,10 +67,9 @@ export default function About() {
             <motion.div
               ref={cardRef}
               onMouseMove={onTilt}
-              onMouseLeave={() => {
-                rx.set(0);
-                ry.set(0);
-              }}
+              onMouseLeave={resetTilt}
+              onTouchEnd={resetTilt}
+              onTouchCancel={resetTilt}
               style={{ rotateX: srx, rotateY: sry, transformStyle: 'preserve-3d' }}
               className="group relative overflow-hidden rounded-[1.75rem] border border-white/10"
               data-cursor

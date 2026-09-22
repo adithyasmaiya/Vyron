@@ -82,7 +82,7 @@ export default function Burst() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  const radius = Math.min(360, vw * 0.3);
+  const radius = Math.min(360, vw < 380 ? vw * 0.28 : vw * 0.3);
   const isMobile = vw < 768;
 
   // Phase 1: Core Expansion & Dissipation
@@ -102,14 +102,14 @@ export default function Burst() {
   const items = disciplines.length > 0 ? disciplines : [];
 
   return (
-    <section ref={ref} className="relative h-[340vh]">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden">
+    <section ref={ref} className="relative h-[290vh] sm:h-[340vh]">
+      <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden">
         {/* Ambient atmospheric aura */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[60vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.08] blur-[130px]" />
         <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] [background-size:64px_64px]" />
 
         {/* Narrative Header: SCATTER → ONE SYSTEM */}
-        <div className="pointer-events-none absolute top-12 z-10 flex flex-col items-center px-4 text-center sm:top-16 md:top-20">
+        <div className="pointer-events-none absolute top-10 z-10 flex flex-col items-center px-4 text-center sm:top-16 md:top-20">
           <p className="font-mono text-[10px] font-medium tracking-[0.5em] text-white/40 uppercase">
             THE SIGNATURE MOMENT
           </p>
@@ -134,7 +134,7 @@ export default function Burst() {
         </div>
 
         {/* Dynamic Interactive Burst Stage */}
-        <div className="relative h-[420px] w-full md:h-[520px]" data-cursor>
+        <div className="relative h-[400px] w-full md:h-[520px]" data-cursor>
           {/* Center Singular Core before Dissolution */}
           <motion.div
             style={{ scale: orbScale, opacity: orbOpacity }}
@@ -177,9 +177,9 @@ export default function Burst() {
           {items.map((d, i) => {
             const angle = i * 60 - 90;
             // Responsive positioning: 2 rows of 3 on mobile, unified linear matrix on desktop
-            const stepX = isMobile ? (vw < 360 ? 90 : vw < 400 ? 102 : 112) : 148;
+            const stepX = isMobile ? (vw < 360 ? 88 : vw < 400 ? 98 : 110) : 148;
             const finalX = isMobile ? ((i % 3) - 1) * stepX : (i - 2.5) * 148;
-            const finalY = isMobile ? (i < 3 ? 90 : 184) : 168;
+            const finalY = isMobile ? (i < 3 ? 62 : 152) : 168;
             return (
               <Shard
                 key={d.id}
@@ -199,7 +199,7 @@ export default function Burst() {
         {/* Narrative Conclusion Punctuation */}
         <motion.p
           style={{ opacity: captionOpacity }}
-          className="absolute bottom-[9%] max-w-md px-6 text-center text-[13px] leading-relaxed tracking-[0.18em] text-white/55"
+          className="absolute bottom-[6%] sm:bottom-[9%] max-w-md px-6 text-center text-[12px] sm:text-[13px] leading-relaxed tracking-[0.18em] text-white/55"
         >
           SIX DISCIPLINES. ONE CHOREOGRAPHY.
           <br />

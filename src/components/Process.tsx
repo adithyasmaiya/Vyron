@@ -246,7 +246,7 @@ export default function Process() {
           </div>
         </motion.div>
 
-        <div className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:gap-5 sm:px-8">
+        <div className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 touch-pan-x overscroll-x-contain sm:-mx-8 sm:gap-5 sm:px-8">
           {steps.map((s) => (
             <article
               key={s.id}
@@ -266,7 +266,7 @@ export default function Process() {
               </div>
 
               {/* Mobile Stage Card Module */}
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d14]/90 p-5 sm:p-7 backdrop-blur-xl">
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d14]/90 p-5 sm:p-7 backdrop-blur-xl transition-all duration-300 active:scale-[0.99] active:border-white/20">
                 {/* Top Specular Edge Highlight */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 

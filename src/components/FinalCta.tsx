@@ -90,8 +90,8 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
   const actionScale = useTransform(scrollYProgress, [0.66, 0.88], [0.92, 1]);
 
   return (
-    <section id="contact" ref={containerRef} className="relative h-[220vh] scroll-mt-20">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-5 py-8 text-center sm:px-8">
+    <section id="contact" ref={containerRef} className="relative h-[200vh] sm:h-[220vh] scroll-mt-20">
+      <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 py-6 text-center sm:px-8 sm:py-8">
         {/* Ambient Focal Glow */}
         <motion.div
           style={{ opacity: glowOpacity }}
@@ -143,7 +143,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
               <span className="absolute h-full w-full animate-ping rounded-full bg-electric/60" />
               <span className="h-1.5 w-1.5 rounded-full bg-electric" />
             </span>
-            <p className="font-mono text-[11px] font-semibold tracking-[0.45em] text-electric uppercase">
+            <p className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.45em] text-electric uppercase">
               READY WHEN YOU ARE
             </p>
             <span className="hidden sm:inline-block h-3 w-px bg-white/15" />
@@ -153,7 +153,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
           </motion.div>
 
           {/* Monumental Headline */}
-          <h2 className="mx-auto mt-6 max-w-5xl font-display text-[clamp(2.3rem,8vw,7.6rem)] font-bold leading-[0.96] tracking-[-0.035em] sm:text-[clamp(2.6rem,8.5vw,7.6rem)]">
+          <h2 className="mx-auto mt-4 sm:mt-6 max-w-5xl font-display text-[clamp(2.15rem,7.8vw,7.6rem)] font-bold leading-[0.96] tracking-[-0.035em] sm:text-[clamp(2.6rem,8.5vw,7.6rem)]">
             <span className="block space-x-3 sm:space-x-5">
               <HeadlineWord text="LET'S" progress={scrollYProgress} range={[0.04, 0.22]} />
               <HeadlineWord text="BUILD" progress={scrollYProgress} range={[0.2, 0.38]} />
@@ -164,7 +164,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
           </h2>
 
           {/* Subtitle Word-by-word Reveal */}
-          <p className="mx-auto mt-6 max-w-lg text-[14px] leading-relaxed sm:text-[15.5px]">
+          <p className="mx-auto mt-4 sm:mt-6 max-w-lg text-[13.5px] sm:text-[15.5px] leading-relaxed">
             {SUBTITLE_WORDS.map((word, idx) => {
               const start = 0.54 + (idx / SUBTITLE_WORDS.length) * 0.22;
               const end = start + 0.04;
@@ -188,7 +188,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
             <Magnetic strength={0.22}>
               <button
                 onClick={onStart}
-                className="group relative flex h-32 w-32 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_90px_10px_rgba(77,124,254,0.7)] active:scale-95 sm:h-44 sm:w-44"
+                className="group relative flex h-32 w-32 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_90px_10px_rgba(77,124,254,0.7)] active:scale-95 touch-manipulation sm:h-44 sm:w-44"
                 aria-label="Start a project with VYRON"
               >
                 {/* Precision beacon ring */}

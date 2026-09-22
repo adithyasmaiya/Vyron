@@ -97,7 +97,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto bg-void/80 p-4 backdrop-blur-xl"
+          className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto bg-void/80 p-3 sm:p-4 backdrop-blur-xl"
           onClick={close}
         >
           <motion.div
@@ -106,13 +106,13 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
             exit={{ opacity: 0, y: 30, scale: 0.97 }}
             transition={{ duration: 0.55, ease: EASE }}
             onClick={(e) => e.stopPropagation()}
-            className="relative my-4 w-full max-w-lg overflow-hidden rounded-[1.75rem] border border-white/12 bg-ink/95 p-5 shadow-[0_60px_160px_-30px_rgba(77,124,254,0.35)] sm:my-8 sm:p-10"
+            className="relative my-auto max-h-[90dvh] w-full max-w-lg overflow-y-auto rounded-[1.75rem] border border-white/12 bg-ink/95 p-5 shadow-[0_60px_160px_-30px_rgba(77,124,254,0.35)] sm:my-8 sm:p-10"
           >
             <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-electric/15 blur-[100px]" />
             <button
               onClick={close}
               aria-label="Close"
-              className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-white/60 transition-colors hover:border-white/30 hover:text-white active:scale-95 sm:right-5 sm:top-5"
+              className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-white/60 transition-colors hover:border-white/30 hover:text-white active:scale-95 touch-manipulation sm:right-5 sm:top-5"
             >
               <X className="h-4 w-4" />
             </button>

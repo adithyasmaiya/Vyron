@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -17,6 +18,14 @@ const FLOW_PATH =
 const RETURN_PATH = 'M700,105 C740,105 750,240 700,250 L60,250';
 
 export default function DataFlow() {
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   return (
     <section id="intelligence" className="relative scroll-mt-20 py-28 sm:py-36">
       {/* Background Atmosphere */}
@@ -107,7 +116,7 @@ export default function DataFlow() {
               </linearGradient>
 
               <filter id="node-glow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur stdDeviation="4.5" result="blur" />
+                <feGaussianBlur stdDeviation={isMobile ? '2.5' : '4.5'} result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />

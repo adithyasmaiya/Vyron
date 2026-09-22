@@ -27,23 +27,27 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
     setScrolled((curr) => (curr !== shouldScroll ? shouldScroll : curr));
   });
 
+  // Body scroll locking when mobile menu drawer is open
   useEffect(() => {
     if (open) {
       stopScroll();
       document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
     } else {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       startScroll();
     }
     return () => {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       startScroll();
     };
   }, [open]);
 
   const go = (href: string) => {
     setOpen(false);
-    window.setTimeout(() => scrollToId(href), open ? 350 : 0);
+    window.setTimeout(() => scrollToId(href), 350);
   };
 
   return (
@@ -55,18 +59,21 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
       >
         <div className="mx-auto max-w-7xl px-3 sm:px-6">
           <nav
-            className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all duration-500 sm:px-5 ${
-              scrolled
-                ? 'border-white/10 bg-black/55 shadow-[0_12px_50px_-12px_rgba(77,124,254,0.25)]'
-                : 'border-white/[0.07] bg-black/25'
+            className={`mt-2.5 flex items-center justify-between rounded-2xl border px-3.5 py-2.5 backdrop-blur-xl transition-all duration-500 sm:mt-3 sm:px-5 sm:py-3 ${
+              open
+                ? 'border-transparent bg-transparent shadow-none'
+                : scrolled
+                ? 'border-white/10 bg-black/60 shadow-[0_12px_50px_-12px_rgba(77,124,254,0.25)]'
+                : 'border-white/[0.07] bg-black/30'
             }`}
           >
+            {/* Brand Logo & Signature */}
             <button
               onClick={() => {
                 setOpen(false);
                 scrollToTop();
               }}
-              className="group flex items-center gap-2.5"
+              className="group flex items-center gap-2.5 focus:outline-none"
               aria-label="VYRON home"
             >
               <VyronMark className="h-7 w-7 transition-transform duration-500 group-hover:rotate-[8deg]" />
@@ -79,6 +86,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
               </span>
             </button>
 
+            {/* Desktop Navigation Links */}
             <div className="hidden items-center gap-7 lg:flex">
               {LINKS.map((l) => (
                 <button
@@ -93,6 +101,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
               ))}
             </div>
 
+            {/* Actions: Desktop CTA + Mobile Hamburger Trigger */}
             <div className="flex items-center gap-3">
               <Magnetic strength={0.3} className="hidden sm:inline-block">
                 <button
@@ -103,10 +112,16 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </Magnetic>
+
+              {/* Mobile Menu Toggle Button */}
               <button
                 onClick={() => setOpen((v) => !v)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-white/80 transition-colors hover:border-white/30 hover:text-white active:scale-95 lg:hidden"
-                aria-label="Toggle menu"
+                className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 active:scale-90 lg:hidden ${
+                  open
+                    ? 'border-white/30 bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.15)]'
+                    : 'border-white/12 bg-white/[0.03] text-white/80 hover:border-white/30 hover:text-white'
+                }`}
+                aria-label={open ? 'Close menu' : 'Open menu'}
               >
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
@@ -115,6 +130,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
         </div>
       </motion.header>
 
+      {/* Full-Screen Mobile Drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -122,37 +138,83 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[110] flex flex-col justify-center bg-void/90 px-8 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-[115] flex h-[100dvh] w-full flex-col justify-between overflow-y-auto overscroll-contain bg-[#050507]/98 px-6 pt-24 pb-8 backdrop-blur-3xl lg:hidden"
           >
-            <div className="pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-electric/15 blur-[120px]" />
-            {LINKS.map((l, i) => (
+            {/* Ambient atmospheric glow */}
+            <div className="pointer-events-none absolute left-1/2 top-1/4 h-80 w-80 -translate-x-1/2 rounded-full bg-electric/[0.12] blur-[120px]" />
+
+            {/* Navigation Section */}
+            <div className="relative z-10 flex flex-col">
+              <p className="font-mono text-[10px] tracking-[0.35em] text-white/40 uppercase mb-3">
+                NAVIGATION
+              </p>
+
+              {LINKS.map((l, i) => (
+                <motion.button
+                  key={l.href}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ delay: 0.05 * i, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => go(l.href)}
+                  className="group flex min-h-[54px] items-center justify-between border-b border-white/[0.08] py-3 text-left active:bg-white/[0.02]"
+                >
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-xs font-semibold text-electric">{l.index}</span>
+                    <span className="font-display text-[clamp(1.75rem,7vw,2.4rem)] font-semibold tracking-tight text-white/90 transition-colors group-active:text-electric">
+                      {l.label}
+                    </span>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-white/30 transition-transform duration-300 group-active:text-electric group-active:translate-x-0.5 group-active:-translate-y-0.5" />
+                </motion.button>
+              ))}
+
+              {/* Start A Project Button inside Drawer */}
               <motion.button
-                key={l.href}
-                initial={{ opacity: 0, y: 28 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 12 }}
-                transition={{ delay: 0.06 * i, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => go(l.href)}
-                className="group flex min-h-[52px] items-center gap-4 border-b border-white/8 py-3.5 text-left active:bg-white/[0.02]"
+                transition={{ delay: 0.32, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                onClick={() => {
+                  setOpen(false);
+                  window.setTimeout(onStart, 300);
+                }}
+                className="mt-6 flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-full bg-white py-4 font-mono text-xs font-semibold tracking-[0.16em] text-black shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all active:scale-[0.98]"
               >
-                <span className="font-display text-xs text-electric">{l.index}</span>
-                <span className="font-display text-4xl font-semibold tracking-tight text-white/90 transition-colors group-active:text-electric">
-                  {l.label}
-                </span>
+                START A PROJECT <ArrowUpRight className="h-4 w-4" />
               </motion.button>
-            ))}
-            <motion.button
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.34, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => {
-                setOpen(false);
-                window.setTimeout(onStart, 300);
-              }}
-              className="mt-8 flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-white py-4 text-sm font-semibold tracking-[0.14em] text-black active:scale-[0.98]"
+            </div>
+
+            {/* Drawer Studio Footer */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.38, duration: 0.5 }}
+              className="relative z-10 mt-8 border-t border-white/[0.08] pt-5 font-mono text-xs text-white/50"
             >
-              START A PROJECT <ArrowUpRight className="h-4 w-4" />
-            </motion.button>
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 text-[11px] text-white/70">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
+                  ONLINE STUDIO · BENGALURU
+                </span>
+                <span className="text-[10px] text-white/35">IST (UTC+5:30)</span>
+              </div>
+              <div className="mt-3 flex items-center justify-between text-[11px] text-white/60">
+                <a
+                  href="mailto:hello@vyron.in"
+                  className="underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+                >
+                  hello@vyron.in
+                </a>
+                <a
+                  href="https://wa.me/919845012345?text=Hello%20VYRON%2C%20we%20want%20to%20discuss%20a%20project"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 transition-colors hover:underline"
+                >
+                  WhatsApp ↗
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

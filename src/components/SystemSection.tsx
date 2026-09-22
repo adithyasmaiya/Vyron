@@ -7,11 +7,11 @@ import { scrollToId } from '../lib/scroll';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-function nodePosition(i: number, total: number) {
+function nodePosition(i: number, total: number, orbitRadius = 37) {
   const angle = (i * (360 / total) - 90) * (Math.PI / 180);
   return {
-    x: 50 + 37 * Math.cos(angle),
-    y: 50 + 37 * Math.sin(angle),
+    x: 50 + orbitRadius * Math.cos(angle),
+    y: 50 + orbitRadius * Math.sin(angle),
     angle,
   };
 }
@@ -20,6 +20,15 @@ export default function SystemSection() {
   const { data: disciplines } = useApi<Discipline>('/api/disciplines');
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const orbitRadius = isMobile ? 35 : 37;
 
   useEffect(() => {
     if (paused || disciplines.length === 0) return;
@@ -68,6 +77,7 @@ export default function SystemSection() {
             className="relative mx-auto aspect-square w-full max-w-[560px]"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
+            onTouchStart={() => setPaused(true)}
           >
             {/* Orbital Rings with Refined Hierarchical Depth */}
             <div className="animate-spin-slower pointer-events-none absolute inset-[3%] rounded-full border border-dashed border-white/[0.09]" />
@@ -88,7 +98,7 @@ export default function SystemSection() {
               </defs>
 
               {disciplines.map((d, i) => {
-                const p = nodePosition(i, disciplines.length);
+                const p = nodePosition(i, disciplines.length, orbitRadius);
                 const isActive = i === active;
                 return (
                   <g key={d.id}>
@@ -187,7 +197,7 @@ export default function SystemSection() {
 
             {/* Six Discipline Nodes */}
             {disciplines.map((d, i) => {
-              const p = nodePosition(i, disciplines.length);
+              const p = nodePosition(i, disciplines.length, orbitRadius);
               const isActive = i === active;
               const labelAbove = p.y > 56;
               return (
@@ -195,7 +205,7 @@ export default function SystemSection() {
                   key={d.id}
                   onClick={() => setActive(i)}
                   onMouseEnter={() => setActive(i)}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 focus:outline-none"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 focus:outline-none active:scale-95 touch-manipulation"
                   style={{ left: `${p.x}%`, top: `${p.y}%` }}
                   aria-label={`Select ${d.name}`}
                 >

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Plus } from 'lucide-react';
 import { useApi } from '../hooks/useApi';
@@ -12,8 +12,14 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-  const stickyTop = isMobile ? `${68 + index * 14}px` : `${88 + index * 30}px`;
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const stickyTop = isMobile ? `${64 + index * 12}px` : `${88 + index * 30}px`;
 
   return (
     <article
@@ -129,7 +135,7 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <button
               onClick={() => setExpanded((v) => !v)}
-              className="group/btn flex items-center gap-2.5 rounded-full bg-white px-6 py-3 text-[12px] font-semibold tracking-[0.16em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_24px_rgba(77,124,254,0.45)]"
+              className="group/btn flex min-h-[44px] items-center gap-2.5 rounded-full bg-white px-6 py-3 text-[12px] font-semibold tracking-[0.16em] text-black transition-all duration-300 hover:bg-electric hover:text-white hover:shadow-[0_0_24px_rgba(77,124,254,0.45)] active:scale-[0.98] touch-manipulation"
             >
               <span>{expanded ? 'CLOSE STUDY' : 'OPEN STUDY'}</span>
               <span
