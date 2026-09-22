@@ -28,7 +28,7 @@ export default function Footer() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[260px] w-[540px] -translate-x-1/2 rounded-full bg-electric/[0.02] blur-[120px]" />
 
       <div className="mx-auto max-w-7xl px-5 pt-16 sm:px-8">
-        <div className="grid gap-12 pb-14 md:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+        <div className="grid gap-10 pb-14 sm:gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
           {/* Brand Signature Column */}
           <div>
             <div className="flex items-center gap-3">
@@ -149,7 +149,7 @@ export default function Footer() {
 
             <button
               onClick={scrollToTop}
-              className="group mt-8 flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.02] px-5 py-2.5 font-mono text-[11px] font-medium tracking-[0.22em] text-white/70 backdrop-blur-md transition-all duration-300 hover:border-electric/60 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_0_20px_rgba(77,124,254,0.3)]"
+              className="group mt-8 flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.02] px-5 py-2.5 font-mono text-[11px] font-medium tracking-[0.22em] text-white/70 backdrop-blur-md transition-all duration-300 hover:border-electric/60 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_0_20px_rgba(77,124,254,0.3)] active:scale-95"
               aria-label="Scroll back to top of page"
             >
               <span>BACK TO TOP</span>
@@ -159,7 +159,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Legal & Compliance Telemetry */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.07] py-7 font-mono text-[11px] text-white/40 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.07] py-7 text-center font-mono text-[11px] text-white/40 sm:flex-row sm:text-left">
           <p>© 2026 VYRON Digital Technologies Pvt. Ltd. · Registered in India</p>
           <div className="flex items-center gap-2 tracking-[0.2em] text-white/35">
             <span className="h-1 w-1 rounded-full bg-emerald-400/60" />

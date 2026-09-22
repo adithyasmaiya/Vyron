@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import VyronMark from './VyronMark';
 import Magnetic from './Magnetic';
-import { scrollToId, scrollToTop } from '../lib/scroll';
+import { scrollToId, scrollToTop, startScroll, stopScroll } from '../lib/scroll';
 
 const LINKS = [
   { label: 'System', href: '#system', index: '01' },
@@ -26,6 +26,20 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
     setHidden((curr) => (curr !== shouldHide ? shouldHide : curr));
     setScrolled((curr) => (curr !== shouldScroll ? shouldScroll : curr));
   });
+
+  useEffect(() => {
+    if (open) {
+      stopScroll();
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      startScroll();
+    }
+    return () => {
+      document.body.style.overflow = '';
+      startScroll();
+    };
+  }, [open]);
 
   const go = (href: string) => {
     setOpen(false);
@@ -61,7 +75,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
               </span>
               <span className="ml-1.5 hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[9px] tracking-[0.16em] text-white/55 md:inline-flex">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                BLR · BOM
+                ONLINE · BLR
               </span>
             </button>
 
@@ -91,7 +105,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
               </Magnetic>
               <button
                 onClick={() => setOpen((v) => !v)}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/12 text-white/80 transition-colors hover:border-white/30 hover:text-white lg:hidden"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-white/80 transition-colors hover:border-white/30 hover:text-white active:scale-95 lg:hidden"
                 aria-label="Toggle menu"
               >
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -119,7 +133,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
                 exit={{ opacity: 0, y: 12 }}
                 transition={{ delay: 0.06 * i, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => go(l.href)}
-                className="group flex items-baseline gap-4 border-b border-white/8 py-4 text-left"
+                className="group flex min-h-[52px] items-center gap-4 border-b border-white/8 py-3.5 text-left active:bg-white/[0.02]"
               >
                 <span className="font-display text-xs text-electric">{l.index}</span>
                 <span className="font-display text-4xl font-semibold tracking-tight text-white/90 transition-colors group-active:text-electric">
@@ -135,7 +149,7 @@ export default function Navbar({ onStart }: { onStart: () => void }) {
                 setOpen(false);
                 window.setTimeout(onStart, 300);
               }}
-              className="mt-8 flex items-center justify-center gap-2 rounded-full bg-white py-4 text-sm font-semibold tracking-[0.14em] text-black"
+              className="mt-8 flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-white py-4 text-sm font-semibold tracking-[0.14em] text-black active:scale-[0.98]"
             >
               START A PROJECT <ArrowUpRight className="h-4 w-4" />
             </motion.button>

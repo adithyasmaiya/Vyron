@@ -232,7 +232,7 @@ export default function Process() {
               HOW WE WORK
             </p>
           </div>
-          <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.05] tracking-tight">
+          <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.05] tracking-tight sm:text-4xl">
             From idea
             <br />
             to{' '}
@@ -246,11 +246,11 @@ export default function Process() {
           </div>
         </motion.div>
 
-        <div className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4">
+        <div className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:gap-5 sm:px-8">
           {steps.map((s) => (
             <article
               key={s.id}
-              className="group relative w-[82vw] max-w-[340px] shrink-0 snap-start"
+              className="group relative w-[84vw] max-w-[340px] shrink-0 snap-center sm:snap-start"
             >
               {/* Mobile Pipeline Rail Node */}
               <div className="mb-4 flex items-center gap-3">
@@ -266,7 +266,7 @@ export default function Process() {
               </div>
 
               {/* Mobile Stage Card Module */}
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d14]/90 p-7 backdrop-blur-xl">
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d14]/90 p-5 sm:p-7 backdrop-blur-xl">
                 {/* Top Specular Edge Highlight */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 

@@ -40,7 +40,7 @@ function Shard({
       <div className="-translate-x-1/2 -translate-y-1/2">
         {/* Diamond Crystal Shard with Precision Inner Bevel */}
         <div
-          className="relative flex h-14 w-14 rotate-45 items-center justify-center border backdrop-blur-2xl transition-all duration-300 md:h-[76px] md:w-[76px]"
+          className="relative flex h-12 w-12 rotate-45 items-center justify-center border backdrop-blur-2xl transition-all duration-300 sm:h-14 sm:w-14 md:h-[76px] md:w-[76px]"
           style={{
             borderColor: `${color}99`,
             background: `linear-gradient(135deg, ${color}35, rgba(5,5,7,0.92))`,
@@ -123,7 +123,7 @@ export default function Burst() {
             </motion.h3>
             <motion.h3
               style={{ opacity: oneOpacity, y: oneY, scale: oneScale }}
-              className="absolute whitespace-nowrap text-center font-display text-[clamp(2.4rem,7vw,5.5rem)] font-bold leading-none tracking-[-0.02em] will-change-transform"
+              className="absolute whitespace-nowrap text-center font-display text-[clamp(2rem,6.5vw,5.5rem)] font-bold leading-none tracking-[-0.02em] will-change-transform"
             >
               ONE{' '}
               <span className="bg-gradient-to-r from-[#9db4ff] via-electric to-iris bg-clip-text text-transparent">
@@ -177,8 +177,9 @@ export default function Burst() {
           {items.map((d, i) => {
             const angle = i * 60 - 90;
             // Responsive positioning: 2 rows of 3 on mobile, unified linear matrix on desktop
-            const finalX = isMobile ? ((i % 3) - 1) * 112 : (i - 2.5) * 148;
-            const finalY = isMobile ? (i < 3 ? 96 : 196) : 168;
+            const stepX = isMobile ? (vw < 360 ? 90 : vw < 400 ? 102 : 112) : 148;
+            const finalX = isMobile ? ((i % 3) - 1) * stepX : (i - 2.5) * 148;
+            const finalY = isMobile ? (i < 3 ? 90 : 184) : 168;
             return (
               <Shard
                 key={d.id}

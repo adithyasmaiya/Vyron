@@ -67,7 +67,7 @@ export default function About() {
               className="group relative overflow-hidden rounded-[1.75rem] border border-white/10"
               data-cursor
             >
-              <div className="relative h-[480px] w-full overflow-hidden sm:h-[560px]">
+              <div className="relative h-[380px] w-full overflow-hidden sm:h-[560px]">
                 <motion.img
                   src="/images/about-core.jpg"
                   alt="VYRON monolith — dark glass slab with violet edge light"
@@ -75,7 +75,7 @@ export default function About() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-void/90 via-void/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-7 sm:p-8">
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 sm:p-8">
                   <div>
                     <p className="text-[10px] tracking-[0.4em] text-white/50">VYRON CORE</p>
                     <p className="mt-2 font-display text-xl font-semibold sm:text-2xl">
@@ -121,7 +121,7 @@ export default function About() {
                 <button
                   key={d.id}
                   onClick={() => scrollToId('#system')}
-                  className="group flex w-full items-center justify-between border-t border-white/[0.09] py-4 text-left last:border-b"
+                  className="group flex min-h-[48px] w-full items-center justify-between border-t border-white/[0.09] py-3.5 text-left last:border-b active:bg-white/[0.02] sm:py-4"
                 >
                   <span className="flex items-baseline gap-4">
                     <span className="font-display text-xs" style={{ color: d.color }}>{d.code}</span>

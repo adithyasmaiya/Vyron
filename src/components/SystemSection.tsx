@@ -254,7 +254,7 @@ export default function SystemSection() {
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
                   transition={{ duration: 0.5, ease: EASE }}
-                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-8 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10"
+                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-5 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10"
                 >
                   {/* Top specular accent line */}
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -287,7 +287,7 @@ export default function SystemSection() {
                     </p>
                   </div>
 
-                  <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                  <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight sm:text-4xl">
                     {current.tagline}
                   </h3>
 
@@ -317,24 +317,28 @@ export default function SystemSection() {
                   </button>
 
                   {/* System Node Selector Indicators */}
-                  <div className="mt-8 flex gap-2">
+                  <div className="mt-8 flex items-center gap-2">
                     {disciplines.map((d, i) => (
                       <button
                         key={d.id}
                         onClick={() => setActive(i)}
                         aria-label={`Go to ${d.key}`}
-                        className={`h-1.5 rounded-full transition-all duration-500 ${
-                          i === active ? 'w-10' : 'w-4 bg-white/15 hover:bg-white/30'
-                        }`}
-                        style={
-                          i === active
-                            ? {
-                                backgroundColor: current.color,
-                                boxShadow: `0 0 10px ${current.color}80`,
-                              }
-                            : undefined
-                        }
-                      />
+                        className="py-2.5 -my-2.5 focus:outline-none"
+                      >
+                        <span
+                          className={`block h-1.5 rounded-full transition-all duration-500 ${
+                            i === active ? 'w-10' : 'w-4 bg-white/15 hover:bg-white/30'
+                          }`}
+                          style={
+                            i === active
+                              ? {
+                                  backgroundColor: current.color,
+                                  boxShadow: `0 0 10px ${current.color}80`,
+                                }
+                              : undefined
+                          }
+                        />
+                      </button>
                     ))}
                   </div>
                 </motion.div>

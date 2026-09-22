@@ -153,7 +153,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
           </motion.div>
 
           {/* Monumental Headline */}
-          <h2 className="mx-auto mt-6 max-w-5xl font-display text-[clamp(2.6rem,8.5vw,7.6rem)] font-bold leading-[0.96] tracking-[-0.035em]">
+          <h2 className="mx-auto mt-6 max-w-5xl font-display text-[clamp(2.3rem,8vw,7.6rem)] font-bold leading-[0.96] tracking-[-0.035em] sm:text-[clamp(2.6rem,8.5vw,7.6rem)]">
             <span className="block space-x-3 sm:space-x-5">
               <HeadlineWord text="LET'S" progress={scrollYProgress} range={[0.04, 0.22]} />
               <HeadlineWord text="BUILD" progress={scrollYProgress} range={[0.2, 0.38]} />
@@ -164,7 +164,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
           </h2>
 
           {/* Subtitle Word-by-word Reveal */}
-          <p className="mx-auto mt-6 max-w-lg text-[14.5px] leading-relaxed sm:text-[15.5px]">
+          <p className="mx-auto mt-6 max-w-lg text-[14px] leading-relaxed sm:text-[15.5px]">
             {SUBTITLE_WORDS.map((word, idx) => {
               const start = 0.54 + (idx / SUBTITLE_WORDS.length) * 0.22;
               const end = start + 0.04;
@@ -182,13 +182,13 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
           {/* Action Trigger Area */}
           <motion.div
             style={{ opacity: actionOpacity, y: actionY, scale: actionScale }}
-            className="mt-10 flex flex-col items-center sm:mt-12"
+            className="mt-6 flex flex-col items-center sm:mt-12"
           >
             {/* Focal Magnetic Circular CTA */}
             <Magnetic strength={0.22}>
               <button
                 onClick={onStart}
-                className="group relative flex h-36 w-36 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_90px_10px_rgba(77,124,254,0.7)] sm:h-44 sm:w-44"
+                className="group relative flex h-32 w-32 flex-col items-center justify-center gap-1 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 hover:bg-electric hover:text-white hover:shadow-[0_0_90px_10px_rgba(77,124,254,0.7)] active:scale-95 sm:h-44 sm:w-44"
                 aria-label="Start a project with VYRON"
               >
                 {/* Precision beacon ring */}
@@ -198,18 +198,18 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
                 {/* Specular highlight rim */}
                 <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-transparent to-black/10 opacity-60 transition-opacity duration-500 group-hover:opacity-0" />
 
-                <span className="relative z-10 font-mono text-[12px] font-bold tracking-[0.22em]">
+                <span className="relative z-10 font-mono text-[11px] font-bold tracking-[0.22em] sm:text-[12px]">
                   START
                 </span>
-                <span className="relative z-10 font-mono text-[12px] font-bold tracking-[0.22em]">
+                <span className="relative z-10 font-mono text-[11px] font-bold tracking-[0.22em] sm:text-[12px]">
                   A PROJECT
                 </span>
-                <ArrowUpRight className="relative z-10 mt-1 h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className="relative z-10 mt-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:h-5 sm:w-5" />
               </button>
             </Magnetic>
 
             {/* Subordinate Direct Transmission Links (Comfortably spaced to avoid magnetic interference) */}
-            <div className="relative z-20 mt-16 flex flex-col items-center gap-4 sm:mt-24 sm:flex-row sm:gap-8">
+            <div className="relative z-20 mt-8 flex flex-col items-center gap-3 sm:mt-16 sm:flex-row sm:gap-8">
               <a
                 href="mailto:hello@vyron.in"
                 className="font-mono text-sm tracking-[0.08em] text-white/60 underline decoration-white/20 underline-offset-8 transition-colors duration-300 hover:text-white hover:decoration-electric"

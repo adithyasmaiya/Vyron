@@ -106,13 +106,13 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
             exit={{ opacity: 0, y: 30, scale: 0.97 }}
             transition={{ duration: 0.55, ease: EASE }}
             onClick={(e) => e.stopPropagation()}
-            className="relative my-8 w-full max-w-lg overflow-hidden rounded-[1.75rem] border border-white/12 bg-ink/95 p-8 shadow-[0_60px_160px_-30px_rgba(77,124,254,0.35)] sm:p-10"
+            className="relative my-4 w-full max-w-lg overflow-hidden rounded-[1.75rem] border border-white/12 bg-ink/95 p-5 shadow-[0_60px_160px_-30px_rgba(77,124,254,0.35)] sm:my-8 sm:p-10"
           >
             <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-electric/15 blur-[100px]" />
             <button
               onClick={close}
               aria-label="Close"
-              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/12 text-white/60 transition-colors hover:border-white/30 hover:text-white"
+              className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-white/60 transition-colors hover:border-white/30 hover:text-white active:scale-95 sm:right-5 sm:top-5"
             >
               <X className="h-4 w-4" />
             </button>
@@ -127,7 +127,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
                 >
                   <Check className="h-7 w-7 text-white" />
                 </motion.span>
-                <h3 className="mt-6 font-display text-3xl font-semibold tracking-tight">Signal received.</h3>
+                <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight sm:text-3xl">Signal received.</h3>
                 <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/55">
                   Your brief is in the system. Our team will respond within one business day.
                 </p>
@@ -141,7 +141,7 @@ export default function ContactModal({ open, onClose }: { open: boolean; onClose
             ) : (
               <>
                 <p className="text-[10px] font-medium tracking-[0.45em] text-electric">START A PROJECT</p>
-                <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight sm:text-4xl">
                   Tell us where you&apos;re headed.
                 </h3>
                 <form onSubmit={submit} className="mt-7 space-y-4" noValidate>

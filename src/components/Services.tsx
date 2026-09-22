@@ -338,7 +338,7 @@ export default function Services() {
             <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
             WHAT WE DO
           </div>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.02] tracking-tight">
+          <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.02] tracking-tight sm:text-4xl">
             Six practices. <span className="text-white/40">One system.</span>
           </h2>
         </motion.div>
@@ -351,7 +351,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8%' }}
               transition={{ duration: 0.6, delay: Math.min(i * 0.04, 0.2) }}
-              className="relative overflow-hidden rounded-[1.75rem] border border-white/12 bg-ink/90 p-7 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] sm:p-8"
+              className="relative overflow-hidden rounded-[1.75rem] border border-white/12 bg-ink/90 p-5 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] sm:p-8"
             >
               {/* Top subtle highlight line */}
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -376,7 +376,7 @@ export default function Services() {
                 </span>
               </div>
 
-              <h3 className="mt-5 font-display text-3xl font-semibold tracking-tight text-white">{s.name}</h3>
+              <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">{s.name}</h3>
               <p className="mt-1.5 text-[15px] font-medium" style={{ color: s.accent }}>{s.tagline}</p>
               <p className="mt-3 text-sm leading-relaxed text-white/55">{s.description}</p>
 

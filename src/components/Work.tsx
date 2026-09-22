@@ -12,11 +12,14 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const stickyTop = isMobile ? `${68 + index * 14}px` : `${88 + index * 30}px`;
+
   return (
     <article
       ref={ref}
       className="group sticky overflow-hidden rounded-[2rem] border border-white/[0.12] bg-[#090b10] shadow-[0_30px_90px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.03)] transition-all duration-500 hover:border-white/25 hover:shadow-[0_40px_110px_-24px_rgba(77,124,254,0.2)]"
-      style={{ top: `${88 + index * 30}px` }}
+      style={{ top: stickyTop }}
       data-cursor
     >
       {/* Top Specular Edge Highlight Line */}
@@ -31,7 +34,7 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
         className={`relative w-full overflow-hidden transition-all duration-500 ${
           expanded
             ? 'min-h-[620px] h-auto pb-10 sm:pb-12'
-            : 'h-[80vh] min-h-[540px] sm:min-h-[560px]'
+            : 'h-[76vh] min-h-[460px] sm:h-[80vh] sm:min-h-[560px]'
         }`}
       >
         <motion.img
@@ -48,7 +51,7 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
         <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/60 via-transparent to-transparent" />
 
         {/* Top Header Registry Bar */}
-        <div className="relative z-20 flex items-center justify-between p-6 sm:p-9">
+        <div className="relative z-20 flex items-center justify-between p-5 sm:p-9">
           <div className="flex items-center gap-3">
             <span className="rounded-md border border-white/10 bg-white/[0.05] px-2.5 py-1 font-mono text-xs font-semibold tracking-[0.25em] text-white/90 backdrop-blur-md">
               {p.code}
@@ -62,22 +65,22 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
         </div>
 
         {/* Bottom Content / Editorial Presentation */}
-        <div className="relative z-20 p-6 sm:p-9">
+        <div className="relative z-20 p-5 sm:p-9">
           <div className="flex flex-wrap items-center gap-2">
             {p.disciplines.map((d) => (
               <span
                 key={d}
-                className="rounded-full border border-white/12 bg-black/50 px-3.5 py-1.5 font-mono text-[10px] font-medium tracking-[0.2em] text-white/75 backdrop-blur-md transition-all duration-300 group-hover:border-white/25 group-hover:text-white"
+                className="rounded-full border border-white/12 bg-black/50 px-3 py-1 font-mono text-[9.5px] font-medium tracking-[0.2em] text-white/75 backdrop-blur-md transition-all duration-300 group-hover:border-white/25 group-hover:text-white sm:px-3.5 sm:py-1.5 sm:text-[10px]"
               >
                 {d.toUpperCase()}
               </span>
             ))}
           </div>
 
-          <h3 className="mt-4 font-display text-[clamp(2.1rem,5vw,4.2rem)] font-semibold leading-[1.0] tracking-[-0.025em] text-white transition-colors duration-300">
+          <h3 className="mt-4 font-display text-[clamp(1.75rem,5.5vw,4.2rem)] font-semibold leading-[1.0] tracking-[-0.025em] text-white transition-colors duration-300 sm:text-[clamp(2.1rem,5vw,4.2rem)]">
             {p.title}
           </h3>
-          <p className="mt-2.5 max-w-xl text-[14px] leading-relaxed text-white/65 sm:text-[15px]">
+          <p className="mt-2.5 max-w-xl text-[13.5px] leading-relaxed text-white/65 sm:text-[15px]">
             {p.subtitle}
           </p>
 
