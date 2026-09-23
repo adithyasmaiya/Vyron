@@ -102,7 +102,7 @@ export default function Burst() {
   const items = disciplines.length > 0 ? disciplines : [];
 
   return (
-    <section ref={ref} className="relative h-[290vh] sm:h-[340vh]">
+    <section ref={ref} className="relative h-[290vh] sm:h-[340vh] overflow-hidden">
       <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden">
         {/* Ambient atmospheric aura */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[60vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.08] blur-[130px]" />

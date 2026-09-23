@@ -39,7 +39,7 @@ export default function Intro() {
   const glow = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
 
   return (
-    <section id="premise" ref={ref} className="relative h-[260vh] sm:h-[300vh]">
+    <section id="premise" ref={ref} className="relative h-[260vh] sm:h-[300vh] overflow-hidden">
       <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 text-center sm:px-6">
         <motion.div
           style={{ opacity: glow }}

@@ -44,7 +44,7 @@ export default function Hero({ onStart, ready = true }: { onStart: () => void; r
       <motion.div style={{ opacity: glowOpacity }} className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[46%] h-[62vmin] w-[86vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/[0.11] blur-[110px]" />
         <div className="absolute left-[18%] top-[24%] h-[30vmin] w-[30vmin] rounded-full bg-iris/[0.10] blur-[100px]" />
-        <div className="absolute bottom-0 left-1/2 h-48 w-[120%] -translate-x-1/2 bg-gradient-to-t from-void via-void/60 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-void via-void/60 to-transparent" />
         <div
           className="absolute inset-0 opacity-[0.45]"
           style={{

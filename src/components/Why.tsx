@@ -105,7 +105,7 @@ export default function Why() {
   };
 
   return (
-    <section id="why" ref={containerRef} className="relative h-[290vh] sm:h-[340vh] scroll-mt-20">
+    <section id="why" ref={containerRef} className="relative h-[290vh] sm:h-[340vh] scroll-mt-20 overflow-hidden">
       {/* Sticky Presentation Viewport */}
       <div className="sticky top-0 flex h-[100dvh] flex-col justify-between overflow-hidden px-5 py-5 sm:px-8 sm:py-10">
         {/* Ambient atmospheric depth lighting */}

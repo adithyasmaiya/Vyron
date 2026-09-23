@@ -68,7 +68,7 @@ export default function Navbar({ onStart, ready = true }: { onStart: () => void;
         initial={false}
         animate={{ y: !ready ? '-120%' : hidden ? '-130%' : '0%' }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed inset-x-0 top-0 z-[120] pointer-events-none"
+        className="fixed inset-x-0 top-0 z-[120] pointer-events-none w-full max-w-[100vw] overflow-x-hidden"
         style={{
           paddingTop: 'max(0.45rem, env(safe-area-inset-top, 0px))',
         }}
@@ -168,7 +168,7 @@ export default function Navbar({ onStart, ready = true }: { onStart: () => void;
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="fixed inset-0 z-[115] h-[100dvh] w-full overflow-y-auto overscroll-contain bg-[#050507]/98 backdrop-blur-3xl touch-pan-y lg:hidden"
+            className="fixed inset-0 z-[115] h-[100dvh] w-full max-w-[100vw] overflow-y-auto overscroll-contain bg-[#050507]/98 backdrop-blur-3xl touch-pan-y lg:hidden"
             style={{
               paddingTop: 'max(4.6rem, calc(env(safe-area-inset-top, 0px) + 4.2rem))',
               paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))',

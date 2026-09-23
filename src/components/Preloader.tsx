@@ -37,7 +37,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
   return (
     <motion.div
       onClick={onDone}
-      className="fixed inset-0 z-[400] flex h-[100dvh] w-full flex-col justify-between overflow-hidden bg-[#050507] px-4 select-none touch-manipulation cursor-pointer sm:px-10"
+      className="fixed inset-0 z-[400] flex h-[100dvh] w-full max-w-[100vw] flex-col justify-between overflow-hidden bg-[#050507] px-4 select-none touch-manipulation cursor-pointer sm:px-10"
       style={{
         paddingTop: 'max(1.25rem, env(safe-area-inset-top, 16px))',
         paddingBottom: 'max(1.1rem, env(safe-area-inset-bottom, 16px))',

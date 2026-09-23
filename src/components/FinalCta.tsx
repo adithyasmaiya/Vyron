@@ -90,7 +90,7 @@ export default function FinalCta({ onStart }: { onStart: () => void }) {
   const actionScale = useTransform(scrollYProgress, [0.66, 0.88], [0.92, 1]);
 
   return (
-    <section id="contact" ref={containerRef} className="relative h-[200vh] sm:h-[220vh] scroll-mt-20">
+    <section id="contact" ref={containerRef} className="relative h-[200vh] sm:h-[220vh] scroll-mt-20 overflow-hidden">
       <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 py-6 text-center sm:px-8 sm:py-8">
         {/* Ambient Focal Glow */}
         <motion.div
