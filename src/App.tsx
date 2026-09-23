@@ -101,7 +101,7 @@ export default function App() {
   }, [loading]);
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-void font-body text-frost antialiased">
+    <div className="min-h-screen bg-void font-body text-frost antialiased">
       <Cursor />
       <motion.div
         style={{ scaleX: progress }}
@@ -112,7 +112,7 @@ export default function App() {
 
       <Navbar onStart={openModal} ready={!loading} />
 
-      <main className="w-full max-w-[100vw] overflow-x-hidden">
+      <main>
         <Hero onStart={openModal} ready={!loading} />
         <Marquee items={MARQUEE_ITEMS} />
         <Intro />

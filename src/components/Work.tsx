@@ -162,9 +162,9 @@ export default function Work() {
   const { data: projects } = useApi<Project>('/api/projects');
 
   return (
-    <section id="work" className="relative scroll-mt-20 overflow-hidden py-28 sm:py-36">
+    <section id="work" className="relative scroll-mt-20 py-28 sm:py-36">
       {/* Subtle Atmospheric Lighting behind the Archive */}
-      <div className="pointer-events-none absolute left-1/2 top-40 h-[600px] w-[90vw] max-w-[800px] -translate-x-1/2 rounded-full bg-electric/[0.03] blur-[150px]" />
+      <div className="pointer-events-none absolute left-1/2 top-40 h-[600px] w-[88vw] max-w-[580px] -translate-x-1/2 rounded-full bg-electric/[0.03] blur-[150px]" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
