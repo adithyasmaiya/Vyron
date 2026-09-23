@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useApi } from '../hooks/useApi';
 import type { Discipline } from '../lib/types';
@@ -21,6 +21,11 @@ export default function SystemSection() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { amount: 0.15 });
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 640);
@@ -30,16 +35,68 @@ export default function SystemSection() {
 
   const orbitRadius = isMobile ? 35 : 37;
 
+  // Auto-rotation timer: cycles through disciplines every 4.0 seconds when in view
   useEffect(() => {
-    if (paused || disciplines.length === 0) return;
-    const t = setInterval(() => setActive((a) => (a + 1) % disciplines.length), 4200);
+    if (!isInView || paused || disciplines.length === 0) return;
+    const t = setInterval(() => {
+      setActive((a) => (a + 1) % disciplines.length);
+    }, 4000);
     return () => clearInterval(t);
-  }, [paused, disciplines.length]);
+  }, [isInView, paused, disciplines.length]);
+
+  // Clean up user interaction timeout
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, []);
+
+  const handleUserSelect = (index: number) => {
+    setActive(index);
+    setPaused(true);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    // Pause auto-rotation for 6s on manual tap/swipe so user can read, then resume
+    pauseTimeoutRef.current = setTimeout(() => {
+      setPaused(false);
+    }, 6000);
+  };
+
+  const handleMouseEnter = () => {
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    setPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    setPaused(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null || disciplines.length === 0) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Detect horizontal swipe gesture on card (> 40px)
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+      if (deltaX < 0) {
+        handleUserSelect((active + 1) % disciplines.length);
+      } else {
+        handleUserSelect((active - 1 + disciplines.length) % disciplines.length);
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   const current = disciplines[active];
 
   return (
-    <section id="system" className="relative scroll-mt-20 overflow-hidden py-28 sm:py-36">
+    <section id="system" ref={sectionRef} className="relative scroll-mt-20 overflow-hidden py-28 sm:py-36">
       {/* Ambient background atmosphere */}
       <div className="pointer-events-none absolute right-[-10%] top-[10%] h-[50vmin] w-[50vmin] rounded-full bg-iris/[0.07] blur-[130px]" />
       <div
@@ -75,9 +132,8 @@ export default function SystemSection() {
             viewport={{ once: true, margin: '-12%' }}
             transition={{ duration: 1.1, ease: EASE }}
             className="relative mx-auto aspect-square w-full max-w-[560px]"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-            onTouchStart={() => setPaused(true)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             {/* Orbital Rings with Refined Hierarchical Depth */}
             <div className="animate-spin-slower pointer-events-none absolute inset-[3%] rounded-full border border-dashed border-white/[0.09]" />
@@ -203,8 +259,13 @@ export default function SystemSection() {
               return (
                 <button
                   key={d.id}
-                  onClick={() => setActive(i)}
-                  onMouseEnter={() => setActive(i)}
+                  type="button"
+                  onClick={() => handleUserSelect(i)}
+                  onMouseEnter={() => {
+                    handleMouseEnter();
+                    setActive(i);
+                  }}
+                  onMouseLeave={handleMouseLeave}
                   className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 focus:outline-none active:scale-95 touch-manipulation"
                   style={{ left: `${p.x}%`, top: `${p.y}%` }}
                   aria-label={`Select ${d.name}`}
@@ -255,16 +316,23 @@ export default function SystemSection() {
           </motion.div>
 
           {/* Interactive Glass Detail Card */}
-          <div className="relative min-h-[380px] lg:min-h-[440px]" data-cursor>
+          <div
+            className="relative min-h-[380px] lg:min-h-[440px]"
+            data-cursor
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <AnimatePresence mode="wait">
               {current && (
                 <motion.div
                   key={current.id}
-                  initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
-                  transition={{ duration: 0.5, ease: EASE }}
-                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-5 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.35, ease: EASE }}
+                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-5 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10 select-none"
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
                 >
                   {/* Top specular accent line */}
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -319,6 +387,7 @@ export default function SystemSection() {
 
                   {/* Explore Link */}
                   <button
+                    type="button"
                     onClick={() => scrollToId('#services')}
                     className="group mt-8 inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.22em] text-white/75 transition-colors hover:text-white"
                   >
@@ -331,7 +400,8 @@ export default function SystemSection() {
                     {disciplines.map((d, i) => (
                       <button
                         key={d.id}
-                        onClick={() => setActive(i)}
+                        type="button"
+                        onClick={() => handleUserSelect(i)}
                         aria-label={`Go to ${d.key}`}
                         className="py-2.5 -my-2.5 focus:outline-none"
                       >
