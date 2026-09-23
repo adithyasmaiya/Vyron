@@ -202,72 +202,68 @@ export default function Services() {
 
   useLayoutEffect(() => {
     if (services.length === 0) return;
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 1024px)', () => {
-      const track = trackRef.current;
-      const wrap = wrapRef.current;
-      if (!track || !wrap) return;
 
-      const getAmount = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      const tween = gsap.to(track, {
-        x: () => -getAmount(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: 'top top',
-          end: () => `+=${getAmount()}`,
-          pin: true,
-          anticipatePin: 1,
-          scrub: 0.5,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (barRef.current) {
-              barRef.current.style.transform = `scaleX(${self.progress})`;
-            }
-            if (indexIndicatorRef.current && services.length > 0) {
-              const currentNum = Math.min(
-                services.length,
-                Math.max(1, Math.round(self.progress * (services.length - 1) + 1))
-              );
-              indexIndicatorRef.current.textContent = `0${currentNum} / 0${services.length}`;
-            }
-          },
+    const track = trackRef.current;
+    const wrap = wrapRef.current;
+    if (!track || !wrap) return;
+
+    const getAmount = () => Math.max(0, track.scrollWidth - window.innerWidth);
+    const tween = gsap.to(track, {
+      x: () => -getAmount(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: wrap,
+        start: 'top top',
+        end: () => `+=${getAmount()}`,
+        pin: true,
+        anticipatePin: 1,
+        scrub: 0.5,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (barRef.current) {
+            barRef.current.style.transform = `scaleX(${self.progress})`;
+          }
+          if (indexIndicatorRef.current && services.length > 0) {
+            const currentNum = Math.min(
+              services.length,
+              Math.max(1, Math.round(self.progress * (services.length - 1) + 1))
+            );
+            indexIndicatorRef.current.textContent = `0${currentNum} / 0${services.length}`;
+          }
         },
-      });
-
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-        gsap.set(track, { x: 0 });
-      };
+      },
     });
 
-    return () => mm.revert();
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+      gsap.set(track, { x: 0 });
+    };
   }, [services.length]);
 
   return (
     <section id="services" className="relative scroll-mt-20">
-      {/* Desktop Horizontal Scroll Experience */}
-      <div ref={wrapRef} className="relative hidden overflow-hidden lg:block">
-        <div ref={trackRef} className="flex h-screen w-max items-stretch">
+      {/* Pinned Horizontal Scroll Experience on all devices */}
+      <div ref={wrapRef} className="relative overflow-hidden">
+        <div ref={trackRef} className="flex h-[100dvh] w-max items-stretch">
           {/* Section Introduction Stage */}
-          <div className="flex w-[44vw] shrink-0 flex-col justify-center px-[7vw]">
+          <div className="flex w-[86vw] max-w-[420px] shrink-0 flex-col justify-center px-6 sm:w-[44vw] sm:px-[7vw]">
             <div className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.45em] text-electric">
               <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
               SYSTEM ARCHITECTURE
             </div>
-            <h2 className="mt-6 font-display text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[1.0] tracking-[-0.02em]">
+            <h2 className="mt-4 sm:mt-6 font-display text-3xl sm:text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[1.05] tracking-[-0.02em]">
               Six practices.
               <br />
               <span className="text-stroke">One system.</span>
             </h2>
-            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-white/55">
-              Scroll horizontally to navigate through every discipline — each one deep enough
+            <p className="mt-4 sm:mt-6 max-w-md text-sm sm:text-[15px] leading-relaxed text-white/55">
+              Scroll to navigate through every discipline — each one deep enough
               to stand alone, engineered to compound together.
             </p>
-            <div className="mt-10 flex items-center gap-3 font-mono text-[11px] tracking-[0.3em] text-white/45">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.02] transition-colors hover:border-white/30">
-                <ArrowUpRight className="h-4 w-4 rotate-45 text-white/70" />
+            <div className="mt-6 sm:mt-10 flex items-center gap-3 font-mono text-[10px] sm:text-[11px] tracking-[0.3em] text-white/45">
+              <span className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.02] transition-colors hover:border-white/30">
+                <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 rotate-45 text-white/70" />
               </span>
               SCROLL TO EXPLORE →
             </div>
@@ -277,7 +273,7 @@ export default function Services() {
           {services.map((s) => (
             <div
               key={s.id}
-              className="relative flex w-[78vw] shrink-0 items-center border-l border-white/[0.07] px-[6vw]"
+              className="relative flex w-[88vw] max-w-[480px] shrink-0 items-center border-l border-white/[0.07] px-6 sm:w-[78vw] sm:max-w-none sm:px-[6vw]"
             >
               {/* Soft Ambient Discipline Aura */}
               <div
@@ -286,7 +282,7 @@ export default function Services() {
               />
 
               {/* Monolithic Number Watermark */}
-              <span className="text-stroke-faint pointer-events-none absolute right-[4vw] top-[8vh] select-none font-display text-[12rem] font-bold leading-none opacity-25">
+              <span className="text-stroke-faint pointer-events-none absolute right-[4vw] top-[8vh] select-none font-display text-7xl sm:text-[12rem] font-bold leading-none opacity-20 sm:opacity-25">
                 {s.code}
               </span>
 
@@ -295,9 +291,9 @@ export default function Services() {
           ))}
 
           {/* System Synthesis Outro Panel */}
-          <div className="flex w-[32vw] shrink-0 flex-col items-center justify-center border-l border-white/[0.07] px-8 text-center">
-            <p className="font-mono text-[10px] tracking-[0.4em] text-white/30 uppercase">SYSTEM SYNTHESIS</p>
-            <p className="mt-3 font-display text-3xl font-semibold tracking-tight text-white/50">
+          <div className="flex w-[78vw] max-w-[340px] shrink-0 flex-col items-center justify-center border-l border-white/[0.07] px-6 text-center sm:w-[32vw] sm:max-w-none sm:px-8">
+            <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.4em] text-white/30 uppercase">SYSTEM SYNTHESIS</p>
+            <p className="mt-3 font-display text-2xl sm:text-3xl font-semibold tracking-tight text-white/50">
               One connected system<span style={{ color: '#4d7cfe' }}>.</span>
             </p>
             <p className="mt-2 text-xs text-white/35">Built for exponential compounding momentum.</p>
@@ -305,8 +301,8 @@ export default function Services() {
         </div>
 
         {/* Bottom Horizontal Scrub Progress Indicator */}
-        <div className="absolute bottom-8 left-[7vw] right-[7vw] flex items-center gap-6">
-          <span className="font-mono text-[10px] tracking-[0.35em] text-white/40">01</span>
+        <div className="absolute bottom-6 sm:bottom-8 left-6 right-6 sm:left-[7vw] sm:right-[7vw] flex items-center gap-4 sm:gap-6">
+          <span className="font-mono text-[9.5px] sm:text-[10px] tracking-[0.35em] text-white/40">01</span>
           <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-white/[0.08]">
             <div
               ref={barRef}
@@ -317,84 +313,12 @@ export default function Services() {
           <div className="flex items-center gap-3">
             <span
               ref={indexIndicatorRef}
-              className="font-mono text-[10px] font-semibold tracking-[0.25em] text-electric"
+              className="font-mono text-[9.5px] sm:text-[10px] font-semibold tracking-[0.25em] text-electric"
             >
               01 / 06
             </span>
-            <span className="font-mono text-[10px] tracking-[0.35em] text-white/40">06</span>
+            <span className="font-mono text-[9.5px] sm:text-[10px] tracking-[0.35em] text-white/40">06</span>
           </div>
-        </div>
-      </div>
-
-      {/* Mobile Native Vertical Touch Scroll Experience (< 1024px) */}
-      <div className="px-5 py-28 sm:px-8 lg:hidden">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.45em] text-electric">
-            <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
-            WHAT WE DO
-          </div>
-          <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.02] tracking-tight sm:text-4xl">
-            Six practices. <span className="text-white/40">One system.</span>
-          </h2>
-        </motion.div>
-
-        <div className="mt-12 space-y-6">
-          {services.map((s, i) => (
-            <motion.article
-              key={s.id}
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-8%' }}
-              transition={{ duration: 0.6, delay: Math.min(i * 0.04, 0.2) }}
-              className="relative overflow-hidden rounded-[1.75rem] border border-white/12 bg-ink/90 p-5 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] sm:p-8"
-            >
-              {/* Top subtle highlight line */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <div
-                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-[85px]"
-                style={{ background: `${s.accent}24` }}
-              />
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-xs font-semibold"
-                    style={{ color: s.accent }}
-                  >
-                    {s.code}
-                  </span>
-                  <span className="h-px w-8" style={{ background: `${s.accent}66` }} />
-                  <span className="font-mono text-[10px] tracking-[0.35em] text-white/45">{s.key}</span>
-                </div>
-                <span className="text-stroke-faint select-none font-display text-4xl font-bold opacity-30">
-                  {s.code}
-                </span>
-              </div>
-
-              <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">{s.name}</h3>
-              <p className="mt-1.5 text-[15px] font-medium" style={{ color: s.accent }}>{s.tagline}</p>
-              <p className="mt-3 text-sm leading-relaxed text-white/55">{s.description}</p>
-
-              <ul className="mt-6 grid grid-cols-1 gap-2.5 border-t border-white/[0.06] pt-5">
-                {s.deliverables.map((d) => (
-                  <li key={d} className="flex items-center gap-2.5 text-[13px] text-white/70">
-                    <span
-                      className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03]"
-                      style={{ color: s.accent }}
-                    >
-                      <Plus className="h-2 w-2" />
-                    </span>
-                    <span className="leading-snug">{d}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.article>
-          ))}
         </div>
       </div>
     </section>
