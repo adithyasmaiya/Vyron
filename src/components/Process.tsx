@@ -26,13 +26,15 @@ export default function Process() {
     const tween = gsap.to(track, {
       x: () => -getAmount(),
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: wrap,
         start: 'top top',
         end: () => `+=${getAmount() * 1.15}`,
         pin: true,
         anticipatePin: 1,
-        scrub: 0.5,
+        scrub: 0.8,
+        fastScrollEnd: true,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           if (barRef.current) {
@@ -130,7 +132,13 @@ export default function Process() {
                 </div>
 
                 {/* Pipeline Stage Card Module */}
-                <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d14]/90 p-5 sm:p-8 backdrop-blur-xl transition-all duration-500 group-hover:-translate-y-1.5 group-hover:border-electric/40 group-hover:bg-[#0e101b]/95 group-hover:shadow-[0_24px_60px_-20px_rgba(77,124,254,0.35)] group-[[data-active=true]]:border-electric/40 group-[[data-active=true]]:bg-[#0e101b]/95 group-[[data-active=true]]:shadow-[0_20px_50px_-20px_rgba(77,124,254,0.25)]">
+                <div
+                  className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d14]/90 p-5 sm:p-8 backdrop-blur-xl group-hover:-translate-y-1.5 group-hover:border-electric/40 group-hover:bg-[#0e101b]/95 group-hover:shadow-[0_24px_60px_-20px_rgba(77,124,254,0.35)] group-[[data-active=true]]:border-electric/40 group-[[data-active=true]]:bg-[#0e101b]/95 group-[[data-active=true]]:shadow-[0_20px_50px_-20px_rgba(77,124,254,0.25)]"
+                  style={{
+                    transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, background-color 0.5s ease, box-shadow 0.6s ease',
+                    willChange: 'transform, border-color, box-shadow',
+                  }}
+                >
                   {/* Top Specular Edge Highlight */}
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:via-electric/60 group-[[data-active=true]]:via-electric/50" />
 

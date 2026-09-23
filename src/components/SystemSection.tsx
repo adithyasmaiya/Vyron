@@ -5,7 +5,7 @@ import { useApi } from '../hooks/useApi';
 import type { Discipline } from '../lib/types';
 import { scrollToId } from '../lib/scroll';
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+const LUXURY_EASE = [0.16, 1, 0.3, 1] as const;
 
 function nodePosition(i: number, total: number, orbitRadius = 37) {
   const angle = (i * (360 / total) - 90) * (Math.PI / 180);
@@ -109,7 +109,7 @@ export default function SystemSection() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-12%' }}
-          transition={{ duration: 0.9, ease: EASE }}
+          transition={{ duration: 0.9, ease: LUXURY_EASE }}
           className="max-w-3xl"
         >
           <p className="text-[11px] font-medium tracking-[0.5em] text-electric">THE VYRON SYSTEM</p>
@@ -130,7 +130,7 @@ export default function SystemSection() {
             initial={{ opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-12%' }}
-            transition={{ duration: 1.1, ease: EASE }}
+            transition={{ duration: 1.1, ease: LUXURY_EASE }}
             className="relative mx-auto aspect-square w-full max-w-[560px]"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -179,29 +179,30 @@ export default function SystemSection() {
                           x2={p.x}
                           y2={p.y}
                           stroke={d.color}
-                          strokeWidth={1.6}
+                          strokeWidth={1.75}
                           vectorEffect="non-scaling-stroke"
                           filter="url(#glow-line)"
                           style={{
-                            transition: 'stroke 0.4s ease',
-                            opacity: 0.85,
+                            transition: 'stroke 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease',
+                            opacity: 0.9,
                           }}
                         />
 
                         {/* High-performance traveling energy packet (Core → Node) */}
                         <motion.circle
-                          r="1.4"
+                          r="1.6"
                           fill="#ffffff"
                           animate={{
                             cx: [50, p.x],
                             cy: [50, p.y],
-                            opacity: [0, 0.9, 0.9, 0],
+                            opacity: [0, 1, 1, 0],
                           }}
                           transition={{
-                            duration: 1.8,
+                            duration: 1.6,
                             repeat: Infinity,
-                            ease: 'easeInOut',
+                            ease: [0.4, 0, 0.2, 1],
                           }}
+                          style={{ willChange: 'cx, cy, opacity' }}
                         />
                       </>
                     )}
@@ -217,6 +218,7 @@ export default function SystemSection() {
                 className="pointer-events-none absolute -inset-5 rounded-full blur-xl transition-all duration-700"
                 style={{
                   backgroundColor: current ? `${current.color}24` : 'transparent',
+                  willChange: 'background-color',
                 }}
               />
               <div
@@ -233,6 +235,7 @@ export default function SystemSection() {
                   boxShadow: current
                     ? `0 0 55px -12px ${current.color}50, inset 0 1px 1px 0 rgba(255,255,255,0.25)`
                     : '0 0 50px -12px rgba(77,124,254,0.4)',
+                  willChange: 'box-shadow, border-color',
                 }}
               >
                 {/* Inner specular bevel */}
@@ -266,47 +269,55 @@ export default function SystemSection() {
                     setActive(i);
                   }}
                   onMouseLeave={handleMouseLeave}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 focus:outline-none active:scale-95 touch-manipulation"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none touch-manipulation"
                   style={{ left: `${p.x}%`, top: `${p.y}%` }}
                   aria-label={`Select ${d.name}`}
                 >
                   {/* Outer active beacon ring */}
                   {isActive && (
-                    <span
-                      className="absolute -inset-1.5 rounded-full border animate-ping-soft opacity-60 pointer-events-none"
-                      style={{ borderColor: d.color }}
+                    <motion.span
+                      initial={{ scale: 0.85, opacity: 0 }}
+                      animate={{ scale: [1, 1.35, 1], opacity: [0.65, 0.2, 0.65] }}
+                      transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                      className="pointer-events-none absolute -inset-2 rounded-full border"
+                      style={{ borderColor: d.color, boxShadow: `0 0 16px ${d.color}60` }}
                     />
                   )}
 
                   {/* Node Capsule */}
                   <span
-                    className={`relative flex h-11 w-11 items-center justify-center rounded-full border font-display text-[11px] font-semibold backdrop-blur-xl transition-all duration-500 sm:h-12 sm:w-12 md:h-16 md:w-16 md:text-xs ${
+                    className={`relative flex h-11 w-11 items-center justify-center rounded-full border font-display text-[11px] font-semibold backdrop-blur-xl sm:h-12 sm:w-12 md:h-16 md:w-16 md:text-xs ${
                       isActive
                         ? 'scale-110 text-white font-bold'
                         : 'border-white/12 bg-void/80 text-white/60 hover:scale-105 hover:border-white/35 hover:text-white'
                     }`}
-                    style={
-                      isActive
+                    style={{
+                      transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease, border-color 0.5s ease, box-shadow 0.6s ease',
+                      willChange: 'transform, box-shadow',
+                      ...(isActive
                         ? {
                             background: `linear-gradient(135deg, ${d.color}45, rgba(5,5,7,0.85))`,
                             borderColor: d.color,
                             boxShadow: `0 0 34px -4px ${d.color}80, inset 0 0 14px -2px ${d.color}40`,
                           }
-                        : undefined
-                    }
+                        : {}),
+                    }}
                   >
                     {d.code}
                   </span>
 
                   {/* Node Label with Clean Badge Appearance */}
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[8.5px] font-medium tracking-[0.25em] transition-all duration-300 md:text-[9.5px] ${
+                    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[8.5px] font-medium tracking-[0.25em] md:text-[9.5px] ${
                       labelAbove ? 'bottom-full mb-2 sm:mb-2.5' : 'top-full mt-2 sm:mt-2.5'
                     } ${
                       isActive
                         ? 'border border-white/15 bg-white/[0.08] text-white font-semibold shadow-sm'
                         : 'text-white/45 group-hover:text-white/75'
                     }`}
+                    style={{
+                      transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
                   >
                     {d.key}
                   </span>
@@ -326,11 +337,12 @@ export default function SystemSection() {
               {current && (
                 <motion.div
                   key={current.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: EASE }}
-                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-5 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10 select-none"
+                  initial={{ opacity: 0, y: 16, scale: 0.985 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -12, scale: 0.985 }}
+                  transition={{ duration: 0.42, ease: LUXURY_EASE }}
+                  className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-ink/80 p-5 backdrop-blur-2xl shadow-[0_24px_64px_-16px_rgba(0,0,0,0.75)] sm:p-10 select-none touch-pan-y"
+                  style={{ willChange: 'transform, opacity' }}
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
                 >
@@ -344,12 +356,22 @@ export default function SystemSection() {
                   />
 
                   {/* Watermark Code */}
-                  <span className="text-stroke-faint pointer-events-none absolute -top-5 right-4 select-none font-display text-[7rem] font-bold leading-none sm:text-[9rem] opacity-35">
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 0.35, scale: 1 }}
+                    transition={{ duration: 0.5, ease: LUXURY_EASE }}
+                    className="text-stroke-faint pointer-events-none absolute -top-5 right-4 select-none font-display text-[7rem] font-bold leading-none sm:text-[9rem]"
+                  >
                     {current.code}
-                  </span>
+                  </motion.span>
 
                   {/* Discipline Header */}
-                  <div className="flex items-center gap-2">
+                  <motion.div
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, delay: 0.04, ease: LUXURY_EASE }}
+                    className="flex items-center gap-2"
+                  >
                     <span
                       className="h-1.5 w-1.5 rounded-full shadow-sm"
                       style={{
@@ -363,18 +385,33 @@ export default function SystemSection() {
                     >
                       {current.key} — {current.name.toUpperCase()}
                     </p>
-                  </div>
+                  </motion.div>
 
-                  <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight sm:text-4xl">
+                  <motion.h3
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.08, ease: LUXURY_EASE }}
+                    className="mt-4 font-display text-2xl font-semibold tracking-tight sm:text-4xl"
+                  >
                     {current.tagline}
-                  </h3>
+                  </motion.h3>
 
-                  <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white/60">
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.12, ease: LUXURY_EASE }}
+                    className="mt-4 max-w-md text-[15px] leading-relaxed text-white/60"
+                  >
                     {current.description}
-                  </p>
+                  </motion.p>
 
                   {/* Capabilities Badges */}
-                  <div className="mt-7 flex flex-wrap gap-2.5">
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.16, ease: LUXURY_EASE }}
+                    className="mt-7 flex flex-wrap gap-2.5"
+                  >
                     {current.capabilities.map((c) => (
                       <span
                         key={c}
@@ -383,7 +420,7 @@ export default function SystemSection() {
                         {c}
                       </span>
                     ))}
-                  </div>
+                  </motion.div>
 
                   {/* Explore Link */}
                   <button
@@ -409,14 +446,16 @@ export default function SystemSection() {
                           className={`block h-1.5 rounded-full transition-all duration-500 ${
                             i === active ? 'w-10' : 'w-4 bg-white/15 hover:bg-white/30'
                           }`}
-                          style={
-                            i === active
+                          style={{
+                            transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+                            willChange: 'width, background-color, box-shadow',
+                            ...(i === active
                               ? {
                                   backgroundColor: current.color,
                                   boxShadow: `0 0 10px ${current.color}80`,
                                 }
-                              : undefined
-                          }
+                              : {}),
+                          }}
                         />
                       </button>
                     ))}

@@ -211,13 +211,15 @@ export default function Services() {
     const tween = gsap.to(track, {
       x: () => -getAmount(),
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: wrap,
         start: 'top top',
-        end: () => `+=${getAmount()}`,
+        end: () => `+=${getAmount() * 1.08}`,
         pin: true,
         anticipatePin: 1,
-        scrub: 0.5,
+        scrub: 0.8,
+        fastScrollEnd: true,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           if (barRef.current) {
@@ -245,7 +247,7 @@ export default function Services() {
     <section id="services" className="relative scroll-mt-20">
       {/* Pinned Horizontal Scroll Experience on all devices */}
       <div ref={wrapRef} className="relative overflow-hidden">
-        <div ref={trackRef} className="flex h-[100dvh] w-max items-stretch">
+        <div ref={trackRef} className="flex h-[100dvh] w-max items-stretch will-change-transform">
           {/* Section Introduction Stage */}
           <div className="flex w-[86vw] max-w-[420px] shrink-0 flex-col justify-center px-6 sm:w-[44vw] sm:px-[7vw]">
             <div className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.45em] text-electric">
