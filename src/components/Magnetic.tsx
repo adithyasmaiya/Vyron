@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function Magnetic({
   children,
-  className = '',
+  className = 'inline-block',
   strength = 0.35,
 }: {
   children: ReactNode;
@@ -40,7 +40,7 @@ export default function Magnetic({
       onTouchEnd={reset}
       onTouchCancel={reset}
       style={{ x: sx, y: sy }}
-      className={`inline-block ${className}`}
+      className={className}
     >
       {children}
     </motion.div>

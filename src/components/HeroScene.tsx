@@ -128,7 +128,7 @@ function DigitalWaveField({ isMobile = false }: { isMobile?: boolean }) {
 }
 
 // Elegant Prismatic Core with Orbiting Energy Rings — responsively scaled for mobile viewports
-function LuminousCore({ scale = 1 }: { scale?: number }) {
+function LuminousCore({ scale = 1, isMobile = false }: { scale?: number; isMobile?: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -180,7 +180,7 @@ function LuminousCore({ scale = 1 }: { scale?: number }) {
   });
 
   return (
-    <group ref={groupRef} position={[0, 0.38, 0.2]} scale={scale}>
+    <group ref={groupRef} position={[0, isMobile ? 1.05 : 0.38, 0.2]} scale={scale}>
       <Float speed={2} rotationIntensity={0.2} floatIntensity={0.6}>
         {/* Crystal Core — high-performance standard material with crisp specular facet response */}
         <mesh ref={coreRef} scale={1.15}>
@@ -370,7 +370,7 @@ export default function HeroScene() {
 
         <CameraRig isMobile={isMobile} />
         <DigitalWaveField isMobile={isMobile} />
-        <LuminousCore scale={coreScale} />
+        <LuminousCore scale={coreScale} isMobile={isMobile} />
         <StarDust count={isMobile ? 110 : 220} />
       </Canvas>
     </div>
